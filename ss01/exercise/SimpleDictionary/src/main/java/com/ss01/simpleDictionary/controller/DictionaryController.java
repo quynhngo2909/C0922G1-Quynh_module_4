@@ -14,7 +14,7 @@ public class DictionaryController {
     IDictionaryService dictionaryService;
 
     @GetMapping("/")
-    public String translate() {
+    public String homePage() {
         return  "index";
     }
 
