@@ -30,14 +30,34 @@
         <td th:text="${product.getName()}"></td>
         <td th:text="${product.getPrice()}"></td>
         <td th:text="${product.getProducer()}"></td>
-        <td><button class="btn btn-primary"><a class="text-decoration-none text-white" th:href="@{/product/detail(id=${product.getId()})}">Detail</a></button></td>
-        <td><button class="btn btn-warning"><a class="text-decoration-none text-white" th:href="@{/product/update/__${product.getId()}__}">Update</a></button></td>
-        <td><button class="btn btn-dark"><a class="text-decoration-none text-white" th:href="@{/product/delete/{id}(id=${product.getId()})}">Delete</a></button></td>
+        <td><a role="button" class="btn btn-primary" th:href="@{/product/detail(id=${product.getId()})}">Detail</a></td>
+        <td><a role="button" class="btn btn-warning" th:href="@{/product/update/__${product.getId()}__}">Update</a></td>
+        <td><a th:href="@{'#myModal_' + ${product.getId()}}" role="button" class="btn btn-secondary" data-bs-toggle="modal">Delete</a></td>
+        <!-- Modal : Delete-->
+        <div class="modal fade" th:id="'myModal_' + ${product.getId()}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticDeleteLabel">Delete Product</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure to delete this product?</p>
+                        <span th:text="'ID : ' + ${product.getId()}"></span><br>
+                        <span th:text="'Name : ' + ${product.getName()}"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a role="button" class="btn btn-primary" th:href="@{/product/delete/{id}(id=${product.getId()})}">Yes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </tr>
     </tbody>
 </table>
+<div th:replace="~{layout::footer}"></div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script src="webapp/bootstrap-5.2.3-dist/js/bootstrap.js"></script>
-
 </html>

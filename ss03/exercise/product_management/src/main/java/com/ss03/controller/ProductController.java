@@ -70,4 +70,9 @@ public class ProductController {
         }
         return new ModelAndView("list","products", productService.findByName(name));
     }
+    @GetMapping("/delete/{id}")
+    public ModelAndView delete(@PathVariable int id){
+        productService.delete(id);
+        return new ModelAndView("list","products", productService.products());
+    }
 }
