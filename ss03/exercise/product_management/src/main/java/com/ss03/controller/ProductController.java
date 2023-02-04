@@ -19,7 +19,7 @@ public class ProductController {
 
     @GetMapping("")
     public String home(Model model) {
-        List<Product> products = productService.products();
+        List<Product> products = productService.getProducts();
         if (products.size() == 0) {
             model.addAttribute("'message", "Empty product list");
         } else {
@@ -31,14 +31,14 @@ public class ProductController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("product", new Product());
-        model.addAttribute("producers", productService.producers());
+        model.addAttribute("producers", productService.getProducers());
         return "create";
     }
 
     @PostMapping("/create")
     public ModelAndView save(Product product, RedirectAttributes redirect) {
         if (productService.save(product)) {
-            return new ModelAndView("list", "products", productService.products());
+            return new ModelAndView("list", "products", productService.getProducts());
         } else {
             return new ModelAndView("create", "errorMessage", "Error! Cannot create new product!");
         }
@@ -47,14 +47,14 @@ public class ProductController {
     @GetMapping("update/{id}")
     public String update(Model model, @PathVariable int id) {
         model.addAttribute("product", productService.findById(id));
-        model.addAttribute("producers", productService.producers());
+        model.addAttribute("producers", productService.getProducers());
         return "update";
     }
 
     @PostMapping("update")
     public ModelAndView update(Product product) {
         productService.update(product.getId(), product);
-        return new ModelAndView("list", "products", productService.products());
+        return new ModelAndView("list", "products", productService.getProducts());
     }
 
     @GetMapping("/detail")
@@ -73,6 +73,6 @@ public class ProductController {
     @GetMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable int id){
         productService.delete(id);
-        return new ModelAndView("list","products", productService.products());
+        return new ModelAndView("list","products", productService.getProducts());
     }
 }

@@ -5,8 +5,8 @@ import com.ss03.model.Product;
 import java.util.List;
 
 public interface IProductRepository {
-    List<Product> products();
-    List<String> producers();
+    List<Product> getProducts();
+    List<String> getProducers();
     boolean save(Product product);
     void update(int id, Product product);
     void delete(int id);

@@ -12,13 +12,13 @@ public class ProductService implements IProductService {
     @Autowired
     private IProductRepository productRepository;
     @Override
-    public List<Product> products() {
-        return productRepository.products();
+    public List<Product> getProducts() {
+        return productRepository.getProducts();
     }
 
     @Override
-    public List<String> producers() {
-        return productRepository.producers();
+    public List<String> getProducers() {
+        return productRepository.getProducers();
     }
 
     @Override

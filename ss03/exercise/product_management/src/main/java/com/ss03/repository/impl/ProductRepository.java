@@ -29,28 +29,22 @@ public class ProductRepository implements IProductRepository {
     }
 
     @Override
-    public List<Product> products() {
+    public List<Product> getProducts() {
         return new ArrayList<>(products.values());
     }
 
     @Override
-    public List<String> producers() {
+    public List<String> getProducers() {
         return producerList;
     }
     @Override
     public boolean save(Product product) {
-        boolean isValidId = true;
-        Set<Integer> keySet = products.keySet();
-        for (Integer key : keySet) {
-            if (product.getId() == key) {
-                isValidId = false;
-                break;
-            }
-        }
-        if (isValidId) {
+        boolean isNewProduct = false;
+        if (products.get(product.getId()) == null) {
+            isNewProduct = true;
             products.put(product.getId(), product);
         }
-        return isValidId;
+        return isNewProduct;
     }
 
     @Override
