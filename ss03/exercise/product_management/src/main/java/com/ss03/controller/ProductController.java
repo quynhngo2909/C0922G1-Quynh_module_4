@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public ModelAndView save(Product product) {
+    public ModelAndView save(Product product, RedirectAttributes redirect) {
         if (productService.save(product)) {
             return new ModelAndView("list", "products", productService.products());
         } else {
@@ -60,5 +61,13 @@ public class ProductController {
     public String detail(Model model, @RequestParam int id) {
         model.addAttribute("product", productService.findById(id));
         return "detail";
+    }
+    @PostMapping("/search")
+    public ModelAndView search(@RequestParam String name){
+        List<Product> products = productService.findByName(name);
+        if (products.size() == 0) {
+            return new ModelAndView("list","errorMessage", "Product" + name + " is not existed");
+        }
+        return new ModelAndView("list","products", productService.findByName(name));
     }
 }

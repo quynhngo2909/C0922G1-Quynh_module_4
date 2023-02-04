@@ -69,14 +69,13 @@ public class ProductRepository implements IProductRepository {
     }
 
     @Override
-    public Product findByName(String name) {
-        int id = 0;
-        List<Product> productArrayList = this.products();
-        for (Product p:productArrayList) {
-            if(name.equals(p.getName())) {
-                id = p.getId();
+    public List<Product> findByName(String name) {
+        List<Product> productList = new ArrayList<>();
+        for(Map.Entry<Integer, Product> entry: products.entrySet()){
+            if(entry.getValue().getName().toLowerCase().contains(name.toLowerCase())){
+                productList.add(entry.getValue());
             }
         }
-        return this.findById(id);
+        return productList;
     }
 }
