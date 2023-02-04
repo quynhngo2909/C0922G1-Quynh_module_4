@@ -9,7 +9,7 @@
 <body>
 <div th:insert="~{layout::navbar}"></div>
 <p></p>
-<table>
+<table >
     <thead>
     <tr>
         <th>No</th>
@@ -30,8 +30,8 @@
         <td th:text="${product.getPrice()}"></td>
         <td th:text="${product.getProducer()}"></td>
         <td><a th:href="@{/product/detail(id=${product.getId()})}">Detail</a></td>
-        <td><a th:href="@{/product/update/__${product.getId()}__}">Update</a></td>
-        <td><a th:href="@{/product/delete/{id}(id=${product.getId()})}">Delete</a></td>
+        <td><button><a th:href="@{/product/update/__${product.getId()}__}">Update</a></button></td>
+        <td><button><a th:href="@{/product/delete/{id}(id=${product.getId()})}">Delete</a></button></td>
     </tr>
     </tbody>
 </table>

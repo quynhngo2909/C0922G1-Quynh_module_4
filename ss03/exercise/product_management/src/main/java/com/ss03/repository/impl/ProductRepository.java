@@ -1,12 +1,14 @@
 package com.ss03.repository.impl;
 
 import com.ss03.model.Product;
+import com.ss03.repository.IProductRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 @Repository
 public class ProductRepository implements IProductRepository {
     private static Map<Integer, Product> products;
+    private static List<String> producerList;
 
     static {
         products = new HashMap<>();
@@ -17,12 +19,24 @@ public class ProductRepository implements IProductRepository {
         products.put(5, new Product(5, "Phone5", 5000.0, "Apple"));
     }
 
+    static {
+        producerList = new ArrayList<>();
+        producerList.add("Apple");
+        producerList.add("SamSung");
+        producerList.add("LG");
+        producerList.add("Oppo");
+        producerList.add("Huawei");
+    }
 
     @Override
     public List<Product> products() {
         return new ArrayList<>(products.values());
     }
 
+    @Override
+    public List<String> producers() {
+        return producerList;
+    }
     @Override
     public boolean save(Product product) {
         boolean isValidId = true;

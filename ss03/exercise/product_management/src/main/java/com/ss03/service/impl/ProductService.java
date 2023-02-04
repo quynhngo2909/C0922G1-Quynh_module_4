@@ -1,7 +1,7 @@
 package com.ss03.service.impl;
 
 import com.ss03.model.Product;
-import com.ss03.repository.impl.IProductRepository;
+import com.ss03.repository.IProductRepository;
 import com.ss03.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +14,11 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> products() {
         return productRepository.products();
+    }
+
+    @Override
+    public List<String> producers() {
+        return productRepository.producers();
     }
 
     @Override
