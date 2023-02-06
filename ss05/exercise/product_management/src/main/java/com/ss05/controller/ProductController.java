@@ -25,33 +25,34 @@ public class ProductController {
             model.addAttribute("message", "Product list is empty!");
         }
         model.addAttribute("products", products);
-        return "product/list";
+        return "list";
     }
     @GetMapping("/create")
     public String create(Model model){
         model.addAttribute("product", new Product());
-        model.addAttribute("producers", producerService.findAll());
-        return "product/create";
+        model.addAttribute("producers", producerService.getProducers());
+        return "create";
     }
 
     @PostMapping("/save")
     public ModelAndView save(Product product){
-        Long id = productService.findById(product.getId()).getId();
+        Long id = product.getId();
         if (id == null) {
-            ModelAndView modelAndView = new ModelAndView("product/list");
+            productService.save(product);
+            ModelAndView modelAndView = new ModelAndView("list");
             modelAndView.addObject("products", productService.findAll());
             modelAndView.addObject("message",
                     "New product was created successfully");
             return modelAndView;
         } else {
             if (productService.save(product)) {
-                ModelAndView modelAndView = new ModelAndView("product/list");
+                ModelAndView modelAndView = new ModelAndView("list");
                 modelAndView.addObject("products", productService.findAll());
                 modelAndView.addObject("message",
                         "Product" + product.getName() + " , id: " + product.getId() + " was updated.");
                 return modelAndView;
             } else {
-                return new ModelAndView("product/create", "errorMessage", "Error! Cannot update the product!");
+                return new ModelAndView("create", "errorMessage", "Error! Cannot update the product!");
             }
         }
     }
@@ -59,26 +60,26 @@ public class ProductController {
     @GetMapping("/update/{id}")
     public String update(Model model, @PathVariable Long id){
         model.addAttribute("product", productService.findById(id));
-        model.addAttribute("producers", producerService.findAll());
-        return "product/update";
+        model.addAttribute("producers", producerService.getProducers());
+        return "update";
     }
 
     @GetMapping("/detail")
     public String detail(Model model, @RequestParam Long id) {
         model.addAttribute("product", productService.findById(id));
-        return "product/detail";
+        return "detail";
     }
     @PostMapping("/search")
     public ModelAndView search(@RequestParam String name){
         List<Product> products = productService.findByName(name);
         if (products.size() == 0) {
-            return new ModelAndView("product/list","errorMessage", "Product" + name + " is not existed");
+            return new ModelAndView("list","errorMessage", "Product" + name + " is not existed");
         }
-        return new ModelAndView("product/list","products", productService.findByName(name));
+        return new ModelAndView("list","products", productService.findByName(name));
     }
     @GetMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable Long id){
         productService.delete(id);
-        return new ModelAndView("product/list","products", productService.findAll());
+        return new ModelAndView("list","products", productService.findAll());
     }
 }

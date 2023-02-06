@@ -8,30 +8,30 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @Repository
-@Transactional
 public class ProducerRepository implements IProducerRepository {
-    private static List<Producer> producers;
+    private static Map<Long, Producer> producers;
     static {
-        producers = new ArrayList<>();
-        producers.add(new Producer((long) 1, "Apple"));
-        producers.add(new Producer((long) 2, "Samsung"));
-        producers.add(new Producer((long) 3, "Oppo"));
-        producers.add(new Producer((long) 4, "LG"));
+        producers = new HashMap<>();
+        producers.put(1L, new Producer(1L, "Apple"));
+        producers.put(2L, new Producer(2L, "Samsung"));
+        producers.put(3L, new Producer(3L, "Oppo"));
+        producers.put(4L, new Producer(4L, "LG"));
     }
-    @PersistenceContext
-    private EntityManager em;
 
     @Override
     public List<Producer> findAll() {
-        return producers;
+        return new ArrayList<>(producers.values());
     }
 
     @Override
     public boolean save(Producer producer) {
-        em.persist(producer);
-        return true;
+        producers.put(producer.getId(), producer);
+        return  true;
     }
 
     @Override
@@ -52,5 +52,15 @@ public class ProducerRepository implements IProducerRepository {
     @Override
     public List<Producer> findByName(String name) {
         return null;
+    }
+
+    @Override
+    public List<String> getProducers() {
+        List<String> producers = new ArrayList<>();
+        List<Producer> producers1 = findAll();
+        for (Producer p:producers1) {
+            producers.add(p.getName());
+        }
+        return producers;
     }
 }
