@@ -1,11 +1,15 @@
 package com.ss05.configuration;
 
 
+import com.ss05.repository.IProducerRepository;
 import com.ss05.repository.IProductRepository;
 
+import com.ss05.repository.impl.ProducerRepository;
 import com.ss05.repository.impl.ProductRepository;
+import com.ss05.service.IProducerService;
 import com.ss05.service.IProductService;
 
+import com.ss05.service.impl.ProducerService;
 import com.ss05.service.impl.ProductService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -140,5 +144,13 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
         return new ProductService();
     }
 
+    @Bean
+    public IProducerRepository producerRepository() {
+        return new ProducerRepository();
+    }
 
+    @Bean
+    public IProducerService producerService() {
+        return new ProducerService();
+    }
 }

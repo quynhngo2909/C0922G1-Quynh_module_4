@@ -16,6 +16,8 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private IProductService productService;
+    @Autowired
+    private  IProducerService producerService;
     @GetMapping("")
     public String list(Model model){
         List<Product> products = productService.findAll();
