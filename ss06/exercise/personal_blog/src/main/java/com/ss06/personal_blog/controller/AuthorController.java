@@ -31,7 +31,7 @@ public class AuthorController {
 
     @GetMapping("/create-author")
     public ModelAndView createAuthor(){
-        return new ModelAndView("/author/createAuthor", "author", new Author("1", "Author"));
+        return new ModelAndView("/author/createAuthor", "author", new Author());
     }
 
     @PostMapping("/create-author")
