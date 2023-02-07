@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Author List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/bootstrap-5.2.3-dist/css/bootstrap.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/author}">Author</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/blog}">Back to Blog Page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/author/create-author}">Create new author</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Category
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Category1</a></li>
+                        <li><a class="dropdown-item" href="#">Category2</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Other</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" th:action="@{author/search-author}" method="post">
+                <input name="name" class="form-control me-2" type="search" placeholder="Search by name"
+                       aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<h3 class="text-center">Author List</h3>
+<table class="table">
+    <thead>
+    <tr>
+     <th>No.</th>
+     <th>ID</th>
+     <th>Name</th>
+     <th>Number of Blog Posts</th>
+     <th>Detail</th>
+     <th>Update</th>
+     <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="author, iter : ${authors}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${author.getId()}"></td>
+        <td th:text="${author.getName()}"></td>
+        <td></td>
+        <td><a role="button" class="btn btn-primary" th:href="@{/author/detial-author(id=${author.getId()})}">Detail</a></td>
+        <td><a role="button" class="btn btn-warning" th:href="@{/author/update-author/__${author.getId()}__}">Update</a></td>
+        <td><a role="button" class="btn btn-secondary" th:href="@{'#myModal_' + ${author.getId()}}">Delete</a></td>
+        <!-- Modal : Delete-->
+        <div class="modal fade" th:id="'myModal_' + ${author.getId()}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticDeleteLabel">Delete Author</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure to delete?</p>
+                        <span th:text="'ID : ' + ${author.getId()}"></span><br>
+                        <span th:text="'Name : ' + ${author.getName()}"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a role="button" class="btn btn-primary" th:href="@{/author/delete-author/{id}(id=${author.getId()})}">Yes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </tr>
+    </tbody>
+</table>
+<p th:text="${message}"></p>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<script src="/static/bootstrap-5.2.3-dist/js/bootstrap.js"></script>
+</html>
