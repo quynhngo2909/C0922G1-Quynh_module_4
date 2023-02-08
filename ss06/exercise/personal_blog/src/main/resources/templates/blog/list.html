@@ -61,14 +61,14 @@
     <tr th:each="blog,iter:${blogs} ">
         <td th:text="${iter.count}"></td>
         <td th:text="${blog.getId()}"></td>
-        <td th:text="${blog.getName()()}"></td>
+        <td th:text="${blog.getName()}"></td>
         <td th:text="${blog.getAuthor().getName()}"></td>
         <td th:text="${blog.getCreatedDate()}"></td>
         <td th:text="${blog.getUpdatedDate()}"></td>
         <td th:text="${blog.getCategory().getName()}"></td>
         <td th:text="${blog.getDescription()}"></td>
-        <td><a role="button" class="btn btn-primary" th:href="@{/blog/detail(id=${blog.getId()})}">Detail</a></td>
-        <td><a role="button" class="btn btn-warning" th:href="@{/blog/update/__${blog.getId()}__}">Update</a></td>
+        <td><a role="button" class="btn btn-primary" th:href="@{/blog/detail-blog(id=${blog.getId()})}">Detail</a></td>
+        <td><a role="button" class="btn btn-warning" th:href="@{/blog/update-blog/__${blog.getId()}__}">Update</a></td>
         <td><a th:href="@{'#myModal_' + ${blog.getId()}}" role="button" class="btn btn-secondary" data-bs-toggle="modal">Delete</a></td>
         <!-- Modal : Delete-->
         <div class="modal fade" th:id="'myModal_' + ${blog.getId()}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -85,7 +85,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <a role="button" class="btn btn-primary" th:href="@{/blog/delete/{id}(id=${blog.getId()})}">Yes</a>
+                        <a role="button" class="btn btn-primary" th:href="@{/blog/delete-blog/__${blog.getId()}__}">Yes</a>
                     </div>
                 </div>
             </div>
