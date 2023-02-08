@@ -29,8 +29,7 @@
                         Category
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Category1</a></li>
-                        <li><a class="dropdown-item" href="#">Category2</a></li>
+                        <li th:each="category:${categories}" ><a class="dropdown-item" th:href="@{/blog/category/__${category.getId()}__}" th:text="${category.getName()}"></a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

@@ -27,14 +27,15 @@
                         Category
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Category1</a></li>
-                        <li><a class="dropdown-item" href="#">Category2</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li th:each="category:${categories}" ><a class="dropdown-item" th:href="@{/blog/category/__${category.getId()}__}" th:text="${category.getName()}"></a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" href="#">Other</a></li>
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" th:action="@{blog/search}" method="post">
+            <form class="d-flex" th:action="@{blog/search-blog}" method="post">
                 <input name="name" class="form-control me-2" type="search" placeholder="Search by name" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
