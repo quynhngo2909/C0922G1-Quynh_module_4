@@ -4,9 +4,10 @@ import com.ss06.personal_blog.model.Category;
 import com.ss06.personal_blog.repository.ICategoryRepository;
 import com.ss06.personal_blog.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
+@Service
 public class CategoryService implements ICategoryService {
     @Autowired
     ICategoryRepository categoryRepository;

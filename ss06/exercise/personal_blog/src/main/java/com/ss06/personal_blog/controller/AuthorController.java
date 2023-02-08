@@ -34,7 +34,7 @@ public class AuthorController {
         return new ModelAndView("/author/createAuthor", "author", new Author());
     }
 
-    @PostMapping("/create-author")
+    @PostMapping("/save-author")
     public ModelAndView save(Author author){
         Optional<Author> author1 = authorService.findById(author.getId());
         if(!author1.isPresent()) {
@@ -46,7 +46,7 @@ public class AuthorController {
         Author author2 = author1.get();
         author2.setName(author.getName());
         authorService.save(author2);
-        return  new ModelAndView("/author/createAuthor",
+        return  new ModelAndView("/author/updateAuthor",
                 "message", " The author was updated successfully!");
     }
 }

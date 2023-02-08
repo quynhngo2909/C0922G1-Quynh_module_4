@@ -9,15 +9,10 @@ public class Author {
     private String id;
 
     private String name;
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private Set<Blog> blogs;
 
     public Author() {
-    }
-
-    public Author(String id, String name) {
-        this.id = id;
-        this.name = name;
     }
 
     public Author(String id, String name, Set<Blog> blogs) {
