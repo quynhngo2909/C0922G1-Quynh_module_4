@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New User Creation Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/bootstrap-5.2.3-dist/css/bootstrap.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/user}">User</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/user}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/user/create-user}">Create new user</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Category
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Other</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" th:action="@{/user/search-user}" method="post">
+                <input name="name" th:value="${name}" class="form-control me-2" type="search"
+                       placeholder="Search by user's name" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+<form class="form-control" th:action="@{/user/save-user}" method="post">
+    <fieldset>
+        <legend>NEW USER CREATION FORM</legend>
+        <table class="table" th:object="${userDto}">
+            <tr>
+                <td><label for="firstNameUser">First Name</label></td>
+                <td><input id="firstNameUser" th:field="*{firstName}" th:value="*{firstName}" placeholder="Quynh" required></td>
+                <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></td>
+            </tr>
+            <tr>
+                <td><label for="lastNameUser">Last Name</label></td>
+                <td><input id="lastNameUser" th:field="*{lastName}" th:value="*{lastName}" placeholder="Ngo" required></td>
+                <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></td>
+            </tr>
+            <tr>
+                <td><label for="phoneNumber">Phone Number</label></td>
+                <td><input id="phoneNumber" th:field="*{phoneNumber}" th:value="*{phoneNumber}" placeholder="09xxxxxxxx" required></td>
+                <td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></td>
+            </tr>
+            <tr>
+                <td><label for="age">Age</label></td>
+                <td><input id="age" th:field="*{age}" th:value="*{age}" required></td>
+                <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></td>
+
+            </tr>
+            <tr>
+                <td><label for="email">Email</label></td>
+                <td><input id="email" th:field="*{email}" th:value="*{email}" required></td>
+                <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></td>
+
+            </tr>
+            <tr>
+                <td/>
+                <td>
+                    <input type="submit" class="btn btn-primary" value="Create">
+                    <a role="button" class="btn btn-secondary" th:href="@{/user}">Cancel</a>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</form>
+</body>
+<div class="container-fluid bg-light text-center">Footer</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+<script src="/static/bootstrap-5.2.3-dist/js/bootstrap.js"></script>
+</html>
