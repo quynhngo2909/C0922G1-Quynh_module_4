@@ -3,20 +3,20 @@ package com.ss08.song_management.dto;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class SongDto implements Validator {
     private int id;
     @NotEmpty(message = "Name must be filled")
-    @Max(value = 800, message = "Max 800 characters")
+    @Size(min = 1, max = 800,message = "Max 800 characters")
     private String name;
     @NotNull(message = "Name must be filled")
-    @Max(value = 300, message = "Max 300 characters")
+    @Size(min = 1, max = 300, message = "Max 300 characters")
     private String artist;
     @NotNull(message = "Name must be filled")
-    @Max(value = 1000,  message = "Max 1000 characters")
+    @Size(min = 1, max = 1000, message = "Max 1000 characters")
     private String type;
 
     public SongDto() {

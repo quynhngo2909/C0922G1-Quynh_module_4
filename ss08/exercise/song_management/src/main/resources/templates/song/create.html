@@ -21,7 +21,7 @@
                     <a class="nav-link active" aria-current="page" th:href="@{/song}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/song/create-song}">Create new song</a>
+                    <a class="nav-link" th:href="@{/song/song-create}">Create new song</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -44,7 +44,7 @@
         </div>
     </div>
 </nav>
-<form class="form-control" th:action="@{/song/song-create}" method="post">
+<form class="form-control" th:action="@{/song/song-save}" method="post">
     <fieldset>
         <legend>New Song Creation Form</legend>
         <table th:object="${songDto}">

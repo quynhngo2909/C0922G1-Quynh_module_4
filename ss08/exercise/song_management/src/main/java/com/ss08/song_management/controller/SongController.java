@@ -31,12 +31,12 @@ public class SongController {
         return "/song/list";
     }
 
-    @GetMapping("/create-song")
+    @GetMapping("/song-create")
     public String create(Model model){
         model.addAttribute("songDto", new SongDto());
         return "/song/create";
     }
-    @PostMapping("/song-create")
+    @PostMapping("/song-save")
     public String save(Model model, @Validated @ModelAttribute SongDto songDto,
                        BindingResult result, RedirectAttributes redirectAttributes){
         new SongDto().validate(songDto, result);
