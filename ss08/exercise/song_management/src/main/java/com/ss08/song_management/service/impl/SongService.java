@@ -24,6 +24,11 @@ public class SongService implements ISongService {
     }
 
     @Override
+    public Song findById(int id) {
+      return songRepository.findById(id).get();
+    }
+
+    @Override
     public Page<Song> findSongByArtistContaining(String artist, Pageable pageable) {
         return songRepository.findSongByArtistContaining(artist, pageable);
     }

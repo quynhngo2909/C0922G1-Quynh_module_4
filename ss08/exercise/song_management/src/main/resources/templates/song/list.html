@@ -62,8 +62,8 @@
     <td th:text="${s.getName()}"></td>
     <td th:text="${s.getArtist()}"></td>
     <td th:text="${s.getType()}"></td>
-    <td><a role="button" class="btn btn-primary" th:href="@{/song/update-song(id=${s.getId()})}">Update</a></td>
-    <td><a role="button" class="btn btn-secondary" th:href="@{/song/delete-song/__${s.getId()}__}">Delete</a></td>
+    <td><a role="button" class="btn btn-primary" th:href="@{/song/song-update/__${s.getId()}__}">Update</a></td>
+    <td><a role="button" class="btn btn-secondary" th:href="@{/song/song-delete/__${s.getId()}__}">Delete</a></td>
   </tr>
   </tbody>
 </table>
