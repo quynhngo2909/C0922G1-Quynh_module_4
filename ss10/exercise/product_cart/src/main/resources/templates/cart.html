@@ -57,13 +57,14 @@
     <tbody>
     <tr th:each="p:${cart.getProducts()}">
         <td th:text="${p.getKey().getName()}"></td>
-        <td><img th:src="${p.getKey().getImage()}"></td>
+        <td><img style="height: 100px; width: 100px" th:src="${p.getKey().getImage()}"></td>
         <td>
-            <a role="button" id="decrease-button" th:text="${'-'}"/>
+            <a role="button" class="btn btn-primary" id="decrease-button" th:text="${'-'}" th:href="@{/shop/product-decrease/__${p.getKey().getId()}__}" />
             <span th:text="${p.getValue()}"/>
-            <a role="button" id="increase-button" th:text="${'+'}"/>
+            <a role="button" class="btn btn-primary" id="increase-button" th:text="${'+'}" th:href="@{/shop/product-add/__${p.getKey().getId()}__}"/>
         </td>
         <td th:text="${p.getKey().getPrice()}"></td>
+        <td><a role="button"  class="btn btn-secondary" th:href="@{/shop/product-delete/__${p.getKey().getId()}__}" th:text="${'Delete'}"/></td>
     </tr>
     <tr>
         <td>Total</td>

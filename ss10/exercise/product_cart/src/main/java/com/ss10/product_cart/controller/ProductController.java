@@ -35,10 +35,28 @@ public class ProductController {
         cart.addProduct(product);
         return "redirect:/shopping-cart";
     }
+    @GetMapping("/product-decrease/{id}")
+    public String decreaseFromCart(@PathVariable Integer id, @ModelAttribute Cart cart){
+        Product product = productService.findById(id);
+        if(product == null){
+            return "/error.404";
+        }
+        cart.decreaseProduct(product);
+        return "redirect:/shopping-cart";
+    }
+
     @GetMapping("/product-detail/{id}")
     public String detail(@PathVariable int id, Model model){
         model.addAttribute("product", productService.findById(id));
         return "/detail";
     }
-
+    @GetMapping("/product-delete/{id}")
+    public String removeFromCart(@PathVariable Integer id, @ModelAttribute Cart cart){
+        Product product = productService.findById(id);
+        if(product == null){
+            return "/error.404";
+        }
+        cart.removeProduct(product);
+        return "redirect:/shopping-cart";
+    }
 }

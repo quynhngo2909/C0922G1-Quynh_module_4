@@ -40,7 +40,7 @@
     </div>
   </div>
 </nav>
-<p class="btn btn-primary" th:href="@{/shopping-cart}">Your Cart</p>
+<a class="btn btn-primary" th:href="@{/shopping-cart}">Your Cart</a>
 <table class="table">
   <thead>
   <tr>
@@ -57,7 +57,7 @@
   <tr th:each="p:${products}">
     <td th:text="${p.getId()}"></td>
     <td th:text="${p.getName()}"></td>
-    <td><img th:src="${p.getImage()}"></td>
+    <td><img style="height: 100px; width: 100px" th:src="${p.getImage()}"></td>
     <td th:text="${p.getPrice()}"></td>
     <td th:text="${p.getDescription()}"></td>
     <td><a role="button" class="btn btn-primary" th:href="@{/shop/product-detail/__${p.getId()}__}">Detail</a></td>
