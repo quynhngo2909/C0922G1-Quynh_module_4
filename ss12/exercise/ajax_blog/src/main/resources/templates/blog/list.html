@@ -36,7 +36,7 @@
             </ul>
             <form class="d-flex">
                 <input id="blogName" class="form-control me-2" type="search" placeholder="Search by blog title" aria-label="Search">
-                <button id="btn-search" onclick="search()" class="btn btn-outline-success">Search</button>
+                <button type="button" id="btn-search" onclick="search()" class="btn btn-outline-success">Search</button>
             </form>
         </div>
     </div>
@@ -97,11 +97,8 @@
         let blogName = $('#blogName').val();
         $.ajax({
             type: "Get",
-            data:   JSON.stringify(blogName),
-            contentType: "application/json; charset=utf-8",
             dataType: "json",
-            url: "http://localhost:8080/blog/search",
-            // traditional: true,
+            url: "http://localhost:8080/blog/search?name=" + blogName,
             success: function (data) {
                 console.log(data)
                 let content = "";
