@@ -10,7 +10,7 @@ public class AppRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id", nullable = false)
     private int id;
-    @Column(name = "role_name", length = 255, nullable = false)
+    @Column(name = "role_name", length = 255, nullable = false, unique = true)
     private String name;
     @OneToMany(mappedBy = "appRole")
     private Set<UserRole> userRoles;

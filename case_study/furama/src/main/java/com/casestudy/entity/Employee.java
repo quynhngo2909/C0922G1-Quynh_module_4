@@ -14,13 +14,13 @@ public class Employee {
     private String name;
     @Column(name = "birthday", length = 10, nullable = false)
     private String birthday;
-    @Column(name = "id_card", length = 45, nullable = false)
+    @Column(name = "id_card", length = 45, nullable = false, unique = true)
     private String idCard;
     @Column(name = "salary", nullable = false)
     private double salary;
-    @Column(name = "phone_number", length = 45, nullable = false)
+    @Column(name = "phone_number", length = 45, nullable = false, unique = true)
     private String phoneNumber;
-    @Column(name = "email", length = 45, nullable = false)
+    @Column(name = "email", length = 45, nullable = false, unique = true)
     private String email;
     @Column(name = "address", length = 45, nullable = false)
     private String address;
@@ -37,7 +37,7 @@ public class Employee {
     private Division division;
 
     @OneToOne
-    @JoinColumn(name = "username", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "username", referencedColumnName = "username", nullable = false)
     private AppUser user;
 
     @OneToMany(mappedBy = "employee")

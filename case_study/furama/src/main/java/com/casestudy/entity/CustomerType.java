@@ -2,7 +2,6 @@ package com.casestudy.entity;
 
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -12,7 +11,7 @@ public class CustomerType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
-    @Column(name = "name", length = 45, nullable = false)
+    @Column(name = "name", length = 45, nullable = false, unique = true)
     private String name;
     @OneToMany(mappedBy = "customerType")
     private Set<Customer> customers;

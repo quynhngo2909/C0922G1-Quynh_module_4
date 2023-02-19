@@ -17,11 +17,11 @@ public class Customer {
     private String birthday;
     @Column(name = "gender", length = 1, nullable = false)
     private Boolean gender;
-    @Column(name = "id_card", length = 45, nullable = false)
+    @Column(name = "id_card", length = 45, nullable = false, unique = true)
     private String idCard;
-    @Column(name = "phone_number", length = 45, nullable = false)
+    @Column(name = "phone_number", length = 45, nullable = false, unique = true)
     private String phoneNumber;
-    @Column(name = "email", length = 45, nullable = false)
+    @Column(name = "email", length = 45, nullable = false, unique = true)
     private String email;
     @Column(name = "address", length = 45, nullable = false)
     private String address;

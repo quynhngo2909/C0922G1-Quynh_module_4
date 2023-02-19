@@ -1,5 +1,7 @@
 package com.casestudy.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -10,6 +12,7 @@ public class AppUser {
     @Column(name = "username", length = 255, nullable = false)
     private String username;
     @Column(name = "password", length = 255, nullable = false)
+    @JsonIgnore
     private String password;
     @OneToOne(mappedBy = "user")
     private Employee employee;

@@ -10,7 +10,7 @@ public class Division {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
-    @Column(name = "name", length = 45, nullable = false)
+    @Column(name = "name", length = 45, nullable = false, unique = true)
     private String name;
     @OneToMany(mappedBy = "division")
     private Set<Employee> employees;
