@@ -27,6 +27,10 @@ public class CustomerType {
         this.name = name;
     }
 
+    public CustomerType(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

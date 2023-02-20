@@ -22,7 +22,7 @@
 </div>
 
 <!--header1: General info-->
-<div th:fragment="header1" class="row d-flex justify-content-center bg-light">
+<div th:fragment="header1" class="row d-flex justify-content-center bg-light fs-7">
     <div class="col-sm-12 col-md-2 text-center">Weather</div>
     <div class=" col-sm-12 col-md-10">
         <div class="row">
@@ -41,13 +41,13 @@
             hours = hours % 12;
             let formattedHours = (hours < 10 ? "0" : "") + hours;
             let formattedMinutes = (minutes < 10 ? "0" : "") + minutes;
-            document.getElementById("localTime").innerHTML = " Local time: " + formattedHours + " : " + formattedMinutes + " " + amOrPm;
+            document.getElementById("localTime").innerHTML = " Local time:  " + formattedHours + " : " + formattedMinutes + " " + amOrPm;
         }, 1000);
     </script>
 </div>
 
 <!--header2: Contact info-->
-<div th:fragment="header2" class="row bg-white d-flex justify-content-center">
+<div th:fragment="header2" class="row bg-white d-flex justify-content-center fs-7">
     <div class="col-sm-12 col-md-2">
         <a th:href="@{#}">
             <img class="img-fluid mx-auto d-block" style="width: 4rem;"
@@ -67,9 +67,9 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-sm-1 col-md-1"><i class="fas fa-map-marker-alt"></i></div>
                     <div class="col-sm-11 col-md-11">
-                        <p class="fs-6 lh-sm">103 – 105 Đường Võ Nguyên Giáp, Phường Khuê Mỹ, Quận Ngũ Hành Sơn,
+                        <p class="lh-sm">103 – 105 Đường Võ Nguyên Giáp, Phường Khuê Mỹ, Quận Ngũ Hành Sơn,
                             Tp.Đà Nẵng, Việt Nam
-                        <p class="fs-6 lh-sm">7.0 km từ Sân bay Quốc tế Đà Nẵng</p>
+                        <p class="lh-sm">7.0 km từ Sân bay Quốc tế Đà Nẵng</p>
                     </div>
                 </div>
             </div>
@@ -77,17 +77,17 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-sm-1 col-md-1"><i class="fas fa-phone-alt"></i></div>
                     <div class="col-sm-11 col-md-11">
-                        <p class="fs-6 lh-sm">84-236-3847 333/888</p>
+                        <p class="lh-sm">84-236-3847 333/888</p>
                     </div>
                 </div>
                 <div class="row d-flex justify-content-center">
                     <div class="col-sm-1 col-md-1"><i class="fas fa-envelope"></i></div>
                     <div class="col-sm-11 col-md-11">
-                        <p class="fs-6 lh-sm">reservation@furamavietnam.com</p>
+                        <p class="lh-sm">reservation@furamavietnam.com</p>
                     </div>
                 </div>
                 <div class="row d-flex justify-content-centerr">
-                    <p class="fs-6 lh-sm">*</p>
+                    <p class="lh-sm">*</p>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
 
 <!--Navbar-->
 <div th:fragment="navbar">
-    <nav class="navbar navbar-expand-lg bg-success justify-content-between">
+    <nav class="navbar navbar-expand-lg bg-success justify-content-between fs-12">
         <div class="d-flex justify-content-between" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
