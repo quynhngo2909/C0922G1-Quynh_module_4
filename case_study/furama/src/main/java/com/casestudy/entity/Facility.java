@@ -22,11 +22,11 @@ public class Facility {
     private String standardRoom;
     @Column(name = "description_other_convenience", length = 45, nullable = false)
     private String descriptionOtherConvenience;
-    @Column(name = "pool_are", nullable = false)
+    @Column(name = "pool_are")
     private double poolArea;
-    @Column(name = "number_of_floors", nullable = false)
+    @Column(name = "number_of_floors")
     private int numberOfFloor;
-    @Column(name = "facility_free", nullable = false)
+    @Column(name = "facility_free")
     private int facilityFree;
     @ManyToOne
     @JoinColumn(name = "rent_type_id", referencedColumnName = "id", nullable = false)

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer List</title>
+    <div th:replace="~{layout::head}"></div>
+</head>
+<body>
+<div th:replace="~{layout::header1}"></div>
+<div th:replace="~{layout::header2}"></div>
+<div th:replace="~{layout::navbar}"></div>
+<div class="d-flex row bg-gradient">
+    <div class="col-sm-1 col-md-3 ">
+        <a th:href="@{'#modalCusCreation'}" role="button" class="btn btn-primary btn-sm" data-bs-toggle="modal">Create
+            new customers</a>
+    </div>
+    <div class="col-sm-1 col-md-9 justify-content-end">
+        <input id="nameSearch" placeholder="Input customer's name">
+        <input id="emailSearch" placeholder="Input customer's email">
+        <input id="customerTypeSearch" placeholder="Input customer's type">
+        <button type="button" id="btnSearchCustomers" class="btn btn-primary btn-sm">Search</button>
+    </div>
+</div>
+<p class="d-flex  justify-content-center">CUSTOMER LIST</p>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Birthday</td>
+        <td>Gender</td>
+        <td>ID Card</td>
+        <td>Phone Number</td>
+        <td>Email</td>
+        <td>Address</td>
+        <td>Customer Type</td>
+        <td></td>
+        <td></td>
+    </tr>
+    </thead>
+    <tbody id="tBody">
+    <tr th:each="c : ${customerPage}">
+        <td th:text="${c.getId()}"></td>
+        <td th:text="${c.getName()}"></td>
+        <td th:text="${c.getBirthday()}"></td>
+        <td th:if="${c.getGender()}">Nam</td>
+        <td th:if="${!c.getGender()}">Nữ</td>
+        <td th:text="${c.getIdCard()}"></td>
+        <td th:text="${c.getPhoneNumber()}"></td>
+        <td th:text="${c.getEmail()}"></td>
+        <td th:text="${c.getAddress()}"></td>
+        <td th:text="${c.getCustomerType().getName()}"></td>
+        <td><a th:href="@{/customers/update/__${c.getId()}__}">Update</a></td>
+        <td><a th:href="@{/customers/delete/__${c.getId()}__}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+<!--Modal Customer Creation-->
+<div id="modalCusCreation" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby='staticBackdropLabel' aria-hidden='true'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title fs-5">New Customer Creation Form</h4>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <table class="table table-striped">
+                        <tr>
+                            <td>Name</td>
+                            <td><input id="name"></td>
+                        </tr>
+                        <tr>
+                            <td>Birthday</td>
+                            <td><input id="birthday" type="date"></td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td>
+                                <select id="gender">
+                                    <option value="1">Nam</option>
+                                    <option value="0">Nu</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ID Card</td>
+                            <td><input id="idCard"></td>
+                        </tr>
+                        <tr>
+                            <td>Phone Number</td>
+                            <td><input id="phoneNumber"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><input id="email"></td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td><input id="address"></td>
+                        </tr>
+                        <tr>
+                            <td>Customer Type</td>
+                            <td>
+                                <select id="customerType">
+                                    <option th:each="customerType:${customerType}" th:value="${customerType.id}"
+                                            th:text="${customerType.name}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" onclick="saveCus()" type="button">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{layout::footer}"></div>
+</body>
+<div th:replace="~{layout::scriptBoostrapJQuery}"></div>
+<script>
+    $(document).ready(function () {
+        showCustomerPage()
+    });
+
+    function showCustomerPage() {
+        $.ajax({
+            url: "http://localhost:8080/v1/customers",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                let result = "";
+                for (let i = 0; i < data.content.length; i++) {
+                    result += `<tr>` +
+                        `<td>${data.content[i].id}</td>` +
+                        `<td>${data.content[i].name}</td>` +
+                        `<td>${data.content[i].birthday}</td>` +
+                        `<td>${data.content[i].gender ? 'Nam' : 'Nu'}</td>` +
+                        `<td>${data.content[i].idCard}</td>` +
+                        `<td>${data.content[i].phoneNumber}</td>` +
+                        `<td>${data.content[i].email}</td>` +
+                        `<td>${data.content[i].address}</td>` +
+                        `<td>${data.content[i].customerType.name}</td>` +
+                        `<td><a role="button" class="btn  btn-outline-info" th:href="@{/customers/update-customer/__${data.content[i].id}__}">Update</a></td>` +
+                        `<td><a role="button" class="btn  btn-outline-secondary" th:href="@{/customers/delete-customer/__${data.content[i].id}__}">Delete</a></td>` +
+                        `<td></td>` +
+                        `</tr>`;
+                    $('#tBody').html(result);
+                }
+            }
+        })
+    }
+
+    function saveCus() {
+        let name = $('#name').val();
+        let birthday = $('#birthday').val();
+        let gender = !!$('#gender').val();
+        let idCard = $('#idCard').val();
+        let phoneNumber = $('#phoneNumber').val();
+        let email = $('#email').val();
+        let address = $('#address').val();
+        let customerType = $('#customerType').val();
+        let newCustomer = {
+            name: name,
+            birthday: birthday,
+            gender: gender,
+            idCard: idCard,
+            phoneNumber: phoneNumber,
+            email: email,
+            address: address,
+            customerType: customerType
+        }
+        $.ajax({
+            headers:{
+                'Accept':'application/json',
+                'Content-type': 'application/json'
+            },
+            type: 'POST',
+            data: JSON.stringify(newCustomer),
+            url: 'http://localhost:8080/v1/customers/save-customer',
+            success: function (){
+                showCustomerPage();
+            }
+        });
+    }
+</script>
+</html>

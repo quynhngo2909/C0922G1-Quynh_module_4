@@ -100,24 +100,24 @@
         <div class="d-flex justify-content-between" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link text-white fw-bold" href="/HomeServlet">HOME</a>
+                    <a class="nav-link text-white fw-bold" th:href="@{/}">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white fw-bold" href="/HomeServlet?action=employee">EMPLOYEE</a>
+                    <a class="nav-link text-white fw-bold" th:href="@{/employees}">EMPLOYEE</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white fw-bold" href="/HomeServlet?action=customer">CUSTOMER</a>
+                    <a class="nav-link text-white fw-bold" th:href="@{/customers}">CUSTOMER</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white fw-bold" href="/HomeServlet?action=service">SERVICE</a>
+                    <a class="nav-link text-white fw-bold" th:href="@{/services}">SERVICE</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white fw-bold" href="/HomeServlet?action=contract">CONTRACT</a>
+                    <a class="nav-link text-white fw-bold" th:href="@{/contracts}">CONTRACT</a>
                 </li>
             </ul>
         </div>
         <div>
-            <form class="d-flex" role="search" action="/HomeServlet/action=search" method="post">
+            <form class="d-flex" role="search" th:action="@{#}" method="post">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-info text-white fw-bold" type="submit">Search</button>
             </form>
@@ -137,6 +137,12 @@
     <div class="row bg-success">
         <span class="d-flex justify-content-center fw-bold text-white">Footer</span>
     </div>
+</div>
+
+<!--Script boostrap, jquery-->
+<div th:fragment="scriptBoostrapJQuery">
+    <script src="/bootstrap-5.2.3-dist/js/bootstrap.js"></script>
+    <script src="/jquery-3.6.3.min.js"></script>
 </div>
 </body>
 </html>
