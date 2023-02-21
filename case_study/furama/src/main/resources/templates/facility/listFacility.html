@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Facility List</title>
+    <div th:replace="~{layout::head}"></div>
+</head>
+<body>
+<div th:replace="~{layout::header}"></div>
+<div class="container d-flex justify-content-between">
+    <a role="button" class="btn btn-secondary btn-sm " th:href="@{/facilities/create-facility}">New Facility</a>
+    <form method="get" th:action="@{/facilities}" class="d-flex">
+        <input name="name" placeholder="Facility's name">
+        <input name="facilityType" placeholder="Facility's type">
+        <button type="submit" class="btn btn-secondary btn-sm">Search</button>
+    </form>
+</div>
+</div>
+<div th:text="${message}" style="color: blue; font-weight: bold"></div>
+<h2 class="text-center">FACILITY LIST</h2>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="row" hidden>ID</th>
+        <th scope="row">Name</th>
+        <th scope="row">Facility Type</th>
+        <th scope="row">Rent Type</th>
+        <th scope="row">Area</th>
+        <th scope="row">Cost</th>
+        <th scope="row">Max People</th>
+        <th scope="row" hidden>Standard Room</th>
+        <th scope="row">Description</th>
+        <th scope="row" hidden>Pool Area</th>
+        <th scope="row">Number of Floor</th>
+        <th scope="row">Facility Free</th>
+        <th scope="row"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="f : ${facilities}">
+        <td th:text="${f.id}" hidden></td>
+        <td th:text="${f.name}"></td>
+        <td th:text="${f.facilityType.name}"></td>
+        <td th:text="${f.rentType.name}"></td>
+        <td th:text="${f.area}"></td>
+        <td th:text="${f.cost}"></td>
+        <td th:text="${f.maxPeople}"></td>
+        <td th:text="${f.standardRoom}" hidden></td>
+        <td th:text="${f.descriptionOtherConvenience}"></td>
+        <td th:text="${f.poolArea}" hidden></td>
+        <td th:text="${f.numberOfFloor}"></td>
+        <td th:text="${f.facilityFree}"></td>
+        <td>
+            <a th:href="@{/facilities/update-facility/__${f.id}__}" role="button" class="btn btn-success">Update</a>
+            <a th:href="@{'#modalFacilityDelete_' + ${f.id}}" role="button" class="btn btn-secondary"
+               data-bs-toggle="modal">Delete</a>
+        </td>
+        <!--Modal delete-->
+        <div class="modal fade" th:id="'modalFacilityDelete_' + ${f.id}" data-bs-backdrop="static"
+             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title fs-5">Delete Facility</h4>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure to delete this facility?</p>
+                        <span th:text="'ID : ' + ${f.id}"></span><br>
+                        <span th:text="'Name : ' + ${f.name}"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                        <a role="button" class="btn btn-primary" th:href="@{/facilities/delete-facility/__${f.id}__}">Yes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </tr>
+    </tbody>
+</table>
+
+<div class="text-center">
+    <a role="button" class="btn btn-sm btn-success" th:if="${facilities.hasPrevious()}"
+       th:href="@{/facilities(page=${facilities.number -1}, name=${name}, facilityType=${facilityType})}">
+        <i class="fas fa-arrow-left btn-sm"></i>
+    </a>
+    <span th:text="${facilities.number + 1}"></span>
+    <span>/</span>
+    <span th:text="${facilities.totalPages}"></span>
+    <a role="button" class="btn btn-sm btn-success" th:if="${facilities.hasNext()}"
+       th:href="@{/facilities(page=${facilities.number + 1},name=${name}, facilityType=${facilityType})}">
+        <i class="fas fa-arrow-right"></i>
+    </a>
+</div>
+
+<div th:replace="~{layout::footer}"></div>
+</body>
+<div th:replace="~{layout::scriptBoostrapJQuery}"></div>
+</html>

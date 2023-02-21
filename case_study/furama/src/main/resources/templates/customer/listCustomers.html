@@ -6,9 +6,7 @@
     <div th:replace="~{layout::head}"></div>
 </head>
 <body>
-<div th:replace="~{layout::header1}"></div>
-<div th:replace="~{layout::header2}"></div>
-<div th:replace="~{layout::navbar}"></div>
+<div th:replace="~{layout::header}"></div>
 <div class="row bg-gradient">
     <div class="col-sm-1 col-md-3 text-start">
         <a th:href="@{'#modalCusCreation'}" role="button" class="btn btn-primary btn-sm" data-bs-toggle="modal">Create
@@ -20,6 +18,7 @@
         <input id="customerTypeSearch" placeholder="Input customer's type">
         <button type="button" id="btnSearchCustomers" class="btn btn-primary btn-sm">Search</button>
     </div>
+
 </div>
 <h4 class="d-flex  justify-content-center">CUSTOMER LIST</h4>
 <table class="table table-striped">
@@ -70,7 +69,7 @@
                     <table class="table table-striped">
                         <tr>
                             <td>Name</td>
-                            <td><input id="name"></td>
+                            <td><input id="name" required></td>
                         </tr>
                         <tr>
                             <td>Birthday</td>
@@ -115,7 +114,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary" onclick="saveCus()" type="button">Save</button>
+                <button class="btn btn-primary" onclick="saveCus()" type="button" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
@@ -168,7 +167,7 @@
     function saveCus() {
         let name = $('#name').val();
         let birthday = $('#birthday').val();
-        let gender = !!$('#gender').val();
+        let gender = $('#gender').val() == 'true';
         let idCard = $('#idCard').val();
         let phoneNumber = $('#phoneNumber').val();
         let email = $('#email').val();

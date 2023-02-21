@@ -1,48 +1,34 @@
-package com.casestudy.entity;
+package com.casestudy.dto;
 
-import javax.persistence.*;
-import java.util.Set;
+import com.casestudy.entity.FacilityType;
+import com.casestudy.entity.RentType;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-@Entity
-@Table(name = "facility")
-public class Facility {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+import javax.validation.constraints.Size;
+
+
+public class FacilityDto implements Validator {
     private Integer id;
-    @Column(name = "name", length = 45, nullable = false, unique = true)
-    private String name;
-    @Column(name = "area",nullable = false)
-    private Integer area;
-    @Column(name = "cost",nullable = false)
-    private Double cost;
-    @Column(name = "max_people",nullable = false)
-    private Integer maxPeople;
-    @Column(name = "standard_room", length = 45, nullable = false)
-    private String standardRoom;
-    @Column(name = "description_other_convenience", length = 45, nullable = false)
-    private String descriptionOtherConvenience;
-    @Column(name = "pool_are")
-    private Double poolArea;
-    @Column(name = "number_of_floors")
-    private Integer numberOfFloor;
-    @Column(name = "facility_free")
-    private String facilityFree;
-    @ManyToOne
-    @JoinColumn(name = "rent_type_id", referencedColumnName = "id")
-    private RentType rentType;
 
-    @ManyToOne
-    @JoinColumn(name = "facility_type_id", referencedColumnName = "id", nullable = false)
+    @Size(max = 45, message = "Facility's name must be not over 45 alphanumeric characters")
+    private String name;
+    private Integer area;
+    private Double cost;
+    private Integer maxPeople;
+    private String standardRoom;
+    @Size(max = 45, message = "Description must not over 45 alphanumeric characters")
+    private String descriptionOtherConvenience;
+    private Double poolArea;
+    private Integer numberOfFloor;
+    private String facilityFree;
+    private RentType rentType;
     private FacilityType facilityType;
 
-    @OneToMany(mappedBy = "facility")
-    private Set<Contract> contracts;
-
-    public Facility() {
+    public FacilityDto() {
     }
 
-    public Facility(Integer id, String name, int area, double cost, int maxPeople, String standardRoom, String descriptionOtherConvenience, double poolArea, int numberOfFloor, String facilityFree, RentType rentType, FacilityType facilityType) {
+    public FacilityDto(Integer id, String name, Integer area, Double cost, Integer maxPeople, String standardRoom, String descriptionOtherConvenience, Double poolArea, Integer numberOfFloor, String facilityFree, RentType rentType, FacilityType facilityType) {
         this.id = id;
         this.name = name;
         this.area = area;
@@ -61,7 +47,7 @@ public class Facility {
         return id;
     }
 
-    public void setId(Integer  id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -85,7 +71,7 @@ public class Facility {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
@@ -151,5 +137,45 @@ public class Facility {
 
     public void setFacilityType(FacilityType facilityType) {
         this.facilityType = facilityType;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        FacilityDto facilityDto = (FacilityDto) target;
+        String name = facilityDto.getName();
+        if (!name.matches("^[A-Z][A-Za-z0-9]*(\\s[A-Z][A-Za-z0-9]*)*$")) {
+            errors.rejectValue("name", "facilityName.Format",
+                    "First character of each word must be capitalized!");
+        }
+        Integer area = facilityDto.getArea();
+        if(area < 0) {
+            errors.rejectValue("area", "facilityArea.NegativeValue",
+                    "Must be a positive number");
+        }
+        Double  cost = facilityDto.getCost();
+        if(cost < 0) {
+            errors.rejectValue("cost", "facilityCost.NegativeValue",
+                    "Must be a positive number");
+        }
+        Integer maxPeople = facilityDto.getMaxPeople();
+        if(maxPeople < 0) {
+            errors.rejectValue("maxPeople", "maxPeople.NegativeValue",
+                    "Must be a positive number");
+        }
+        Double  poolArea = facilityDto.getPoolArea();
+        if(poolArea < 0) {
+            errors.rejectValue("poolArea", "facilityPoolArea.NegativeValue",
+                    "Must be a positive number");
+        }
+        Integer numberOfFloor = facilityDto.getNumberOfFloor();
+        if(numberOfFloor < 0) {
+            errors.rejectValue("numberOfFloor", "facilityNumberOfFloor.NegativeValue",
+                    "Must be a positive number");
+        }
     }
 }

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Facility</title>
+    <div th:replace="~{layout::head}"></div>
+</head>
+<body>
+<div th:replace="~{layout::header}"></div>
+<div th:text="${message}" style="color: red; font-weight: bold"></div>
+<form method="post" th:object="${facilityDto}" th:action="@{/facilities/save-facility/}" class="form-control">
+    <fieldset>
+        <legend class="text-center fw-bold">NEW FACILITY CREATION FORM</legend>
+        <table class="table" >
+            <tr>
+                <td>Name</td>
+                <td><input th:field="*{name}"></td>
+                <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+            </tr>
+            <tr>
+                <td>Area</td>
+                <td><input th:field="*{area}" th:value="*{area}"required></td>
+                <td th:if="${#fields.hasErrors('area')}" th:errors="*{area}"></td>
+            </tr>
+            <tr>
+                <td>Cost</td>
+                <td><input th:field="*{cost}" th:value="*{cost}"required></td>
+                <td th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}"></td>
+            </tr>
+            <tr>
+                <td>Max People</td>
+                <td><input th:field="*{maxPeople}" th:value="*{maxPeople}" required></td>
+                <td th:if="${#fields.hasErrors('maxPeople')}" th:errors="*{maxPeople}"></td>
+            </tr>
+            <tr>
+                <td>Standard Room</td>
+                <td><input th:field="*{standardRoom}" th:value="*{standardRoom}" required></td>
+                <td th:if="${#fields.hasErrors('standardRoom')}" th:errors="*{standardRoom}"></td>
+            </tr>
+            <tr>
+                <td>Description Other Convenience</td>
+                <td><input th:field="*{descriptionOtherConvenience}"  th:value="*{descriptionOtherConvenience}"required></td>
+                <td th:if="${#fields.hasErrors('descriptionOtherConvenience')}"
+                    th:errors="*{descriptionOtherConvenience}"></td>
+            </tr>
+            <tr>
+                <td>Pool Area</td>
+                <td><input th:field="*{poolArea}" th:value="*{poolArea}"required></td>
+                <td th:if="${#fields.hasErrors('poolArea')}" th:errors="*{poolArea}"></td>
+            </tr>
+            <tr>
+                <td>Number of Floor</td>
+                <td><input th:field="*{numberOfFloor}" th:value="*{numberOfFloor}"required></td>
+                <td th:if="${#fields.hasErrors('numberOfFloor')}" th:errors="*{numberOfFloor}"></td>
+            </tr>
+            <tr>
+                <td>Facility Free</td>
+                <td><input th:field="*{facilityFree}" th:value="*{facilityFree}"required></td>
+                <td th:if="${#fields.hasErrors('facilityFree')}" th:errors="*{facilityFree}"></td>
+            </tr>
+            <tr>
+                <td>Rent Type</td>
+                <td>
+                    <select th:field="*{rentType}" required>
+                        <option th:each="rentType : ${rentTypes}" th:value="${rentType.id}"
+                                th:text="${rentType.name}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Facility Type</td>
+                <td>
+                    <select th:field="*{facilityType}">
+                        <option th:each="facilityType : ${facilityTypes}" th:value="${facilityType.id}"
+                                th:text="${facilityType.name}"></option>
+                    </select>
+                </td>
+                <td th:if="${#fields.hasErrors('facilityType')}" th:errors="*{facilityType}"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <a role="button" class="btn btn-secondary" th:href="@{/facilities}">Cancel</a>
+                    <button type="submit" class="btn btn-success">Create</button>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</form>
+
+<div th:replace="~{layout::footer}"></div>
+</body>
+<div th:replace="~{layout::scriptBoostrapJQuery}"></div>
+</html>
