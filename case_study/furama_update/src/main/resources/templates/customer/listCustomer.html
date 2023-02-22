@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer List</title>
+    <div th:replace="~{layout::head}"></div>
+</head>
+<body>
+<div th:replace="~{layout::header}"></div>
+<div class="row bg-gradient">
+    <div class="col-sm-1 col-md-3 text-start">
+        <a th:href="@{/customers/create-customer}"  role="button" class="btn btn-primary btn-sm">Create new customers</a>
+    </div>
+    <form class="col-sm-1 col-md-9 text-end" method="get" th:action="@{/customers}">
+        <input name="name" placeholder="Input customer's name">
+        <input name="email"  placeholder="Input customer's email">
+        <input name="customerTypeName" placeholder="Input customer's type">
+        <button type="submit" id="btnSearchCustomers" class="btn btn-primary btn-sm">Search</button>
+    </form>
+</div>
+<div th:text="${message}" style="color: blue; font-weight: bold"></div>
+<h4 class="d-flex  justify-content-center">CUSTOMER LIST</h4>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="row" hidden>ID</th>
+        <th scope="row">Name</th>
+        <th scope="row">Birthday</th>
+        <th scope="row">Gender</th>
+        <th scope="row">ID Card</th>
+        <th scope="row">Phone Number</th>
+        <th scope="row">Email</th>
+        <th scope="row">Address</th>
+        <th scope="row">Customer Type</th>
+        <th scope="row"></th>
+        <th scope="row"></th>
+    </tr>
+    </thead>
+    <tbody id="tBody">
+    <tr th:each="c : ${customerPage}">
+        <td th:text="${c.id}" hidden></td>
+        <td th:text="${c.getName()}"></td>
+        <td th:text="${c.getBirthday()}"></td>
+        <td th:text="${c.getGender()}? 'Nam' : 'Nu'"></td>
+        <td th:text="${c.getIdCard()}"></td>
+        <td th:text="${c.getPhoneNumber()}"></td>
+        <td th:text="${c.getEmail()}"></td>
+        <td th:text="${c.getAddress()}"></td>
+        <td th:text="${c.getCustomerType().getName()}"></td>
+        <td>
+            <a th:href="@{/customers/update-customer/__${c.getId()}__}" role="button" class="btn btn-success btn-sm">Update</a>
+        </td>
+        <td>
+            <a th:href="@{'#modalCustomerDelete_' + ${c.id}}" role="button" class="btn btn-secondary btn-sm"
+               data-bs-toggle="modal">Delete</a>
+        </td>
+        <!--Modal delete-->
+        <div class="modal fade" th:id="'modalCustomerDelete_' + ${c.id}" data-bs-backdrop="static"
+             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title fs-5">Delete Customer</h4>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure to delete this customer?</p>
+                        <span th:text="'ID : ' + ${c.id}"></span><br>
+                        <span th:text="'Name : ' + ${c.name}"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                        <a role="button" class="btn btn-primary" th:href="@{/customers/delete-customer/__${c.id}__}">Yes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </tr>
+    </tbody>
+</table>
+<div class="text-center">
+    <a role="button" class="btn btn-success btn-sm" th:if="${customerPage.hasPrevious()}"
+       th:href="@{/customers(page=${customerPage.number -1},name=${name},email=${email},customerTypeName=${customerTypeName})}">
+        <i class="fas fa-arrow-left btn-sm"></i>
+    </a>
+    <span th:text="${customerPage.number + 1}"></span>
+    <span>/</span>
+    <span th:text="${customerPage.totalPages}"></span>
+    <a role="button" class="btn btn-success btn-sm" th:if="${customerPage.hasNext()}"
+        th:href="@{/customers(page=${customerPage.number + 1},name=${name},email=${email},customerTypeName=${customerTypeName})}">
+        <i class="fas fa-arrow-right"></i>
+    </a>
+</div>
+<div th:replace="~{layout::footer}"></div>
+</body>
+<div th:replace="~{layout::scriptBoostrapJQuery}"></div>
+</html>
