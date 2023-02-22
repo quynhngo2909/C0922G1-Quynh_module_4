@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contract List</title>
+  <head>
+    <meta charset="UTF-8">
+    <title>Customer List</title>
+    <div th:replace="~{layout::head}"></div>
+  </head>
+<body>
+<div th:replace="~{layout::header}"></div>
+<div class="container justify-content-center">
+    <a role="button" th:href="@{/contracts/create-contract}" class="btn btn-success btn-sm">Create new contract</a>
+    <form class="form-control" method="get" th:action="@{/contracts}">
+        <input name="customerName" placeholder="Input Customer's Name">
+        <input name="employeeName" placeholder="Input Employee's Name">
+        <input name="facilityName" placeholder="Input Facility's Name">
+        <button type="submit">Search</button>
+    </form>
+</div>
+<p class="text-center fw-bold">CONTRACT LIST</p>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="row">#</th>
+        <th scope="row">Facility</th>
+        <th scope="row">Customer</th>
+        <th scope="row">Start Date</th>
+        <th scope="row">End Date</th>
+        <th scope="row">Deposit</th>
+        <th scope="row">Total</th>
+        <th scope="row" colspan="2">Attach Facility</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="contract, iter : ${contracts}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${contract.facility.name}"></td>
+        <td th:text="${contract.customer.name}"></td>
+        <td th:text="${contract.startDate}"></td>
+        <td th:text="${contract.endDate}"></td>
+        <td th:text="${contract.deposit}"></td>
+        <td></td>
+        <td>
+            <a role="button" class="btn btn-info btn-sm">+</a>
+            <a role="button" class="btn btn-info btn-sm">Attach Facility List</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="text-center">
+    <a role="button" class="btn btn-success btn-sm" th:if="${contracts.hasPrevious()}"
+       th:href="@{/contracts(page=${contracts.number + 1},customerName=${customerName},employeeName=${employeeName},facilityName=${facilityName})}" >
+        <i class="fas fa-arrow-left btn-sm"></i>
+    </a>
+    <span th:text="${contracts.number + 1}"></span>
+    <span>/</span>
+    <span  th:text="${contracts.totalPages}" th:if="${contracts.hasNext()}" th:href="@{}"></span>
+    <a role="button" class="btn btn-success btn-sm" >
+        <i class="fas fa-arrow-right"></i>
+    </a>
+</div>
+<div th:replace="~{layout::footer}"></div>
+</body>
+<div th:replace="~{layout::scriptBoostrapJQuery}"></div>
+</html>

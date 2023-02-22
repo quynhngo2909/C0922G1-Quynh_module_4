@@ -1,5 +1,6 @@
 package com.casestudy.service;
 
+import com.casestudy.entity.Contract;
 import com.casestudy.entity.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,5 +14,7 @@ public interface ICustomerService {
 
     void setExpiredCustomer(int id);
     Integer getCustomerIDByIdCardEmailPhoneNumber(String idCard, String email, String phoneNumber);
+
+
 }
 

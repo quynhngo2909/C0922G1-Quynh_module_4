@@ -1,42 +1,36 @@
-package com.casestudy.entity;
+package com.casestudy.dto;
+
+import com.casestudy.entity.ContractDetail;
+import com.casestudy.entity.Customer;
+import com.casestudy.entity.Employee;
+import com.casestudy.entity.Facility;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-@Table(name = "contract")
-public class Contract {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+
+public class ContractDto {
     private int id;
 
-    @Column(name = "deposit", nullable = false)
-    private double deposit;
-
-    @Column(name = "start_date", nullable = false)
     private String startDate;
-    @Column(name = "end_date", nullable = false)
+
     private String endDate;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    private double deposit;
+
+    private Employee employee;
+
+
     private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false)
-    private Employee employee;
-    @ManyToOne
-    @JoinColumn(name = "facility_id", referencedColumnName = "id", nullable = false)
+
     private Facility facility;
 
-    @OneToMany(mappedBy = "contract")
-    private Set<ContractDetail> contractDetails;
 
-    public Contract() {
+    public ContractDto() {
     }
 
-    public Contract(int id, String startDate, String endDate, double deposit, Employee employee, Customer customer, Facility facility, Set<ContractDetail> contractDetails) {
+    public ContractDto(int id, String startDate, String endDate, double deposit, Employee employee, Customer customer, Facility facility, Set<ContractDetail> contractDetails) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -44,8 +38,8 @@ public class Contract {
         this.employee = employee;
         this.customer = customer;
         this.facility = facility;
-        this.contractDetails = contractDetails;
     }
+
 
     public int getId() {
         return id;
@@ -103,13 +97,6 @@ public class Contract {
         this.facility = facility;
     }
 
-    public Set<ContractDetail> getContractDetails() {
-        return contractDetails;
-    }
-
-    public void setContractDetails(Set<ContractDetail> contractDetails) {
-        this.contractDetails = contractDetails;
-    }
 }
 
 
