@@ -41,8 +41,7 @@ public class ContractController {
                                @RequestParam(name = "facilityName", defaultValue = "") String facilityName,
                                @PageableDefault(size = 5, sort = "start_date", direction = Sort.Direction.DESC) Pageable pageable,
                                Model model) {
-//        Page<Contract> contracts = contractService.findContractByCustomerEmployeeFacility(customerName,employeeName ,facilityName, pageable);
-        Page<IContractDto> contracts = contractService.getContractDtos(customerName,employeeName ,facilityName, pageable);
+        Page<IContractDto> contracts = contractService.getContractDtos(customerName, employeeName, facilityName, pageable);
         model.addAttribute("contracts", contracts);
         model.addAttribute("customerName", customerName);
         model.addAttribute("employeeName", employeeName);
@@ -54,7 +53,7 @@ public class ContractController {
     }
 
     @GetMapping("/create-contract")
-    public String createContract(Model model){
+    public String createContract(Model model) {
         model.addAttribute("attachFacilities", attachFacilityService.getAttachFacilities());
         model.addAttribute("customers", customerService.customers());
         model.addAttribute("employees", employeeService.employees());
@@ -65,8 +64,8 @@ public class ContractController {
     }
 
     @PostMapping("/save-contract")
-    public String saveContract(@Validated  @ModelAttribute ContractDto contractDto, BindingResult bindingResult, Model model,
-                               RedirectAttributes redirectAttributes){
+    public String saveContract(@Validated @ModelAttribute ContractDto contractDto, BindingResult bindingResult, Model model,
+                               RedirectAttributes redirectAttributes) {
         Contract contract = new Contract();
         new ContractDto().validate(contractDto, bindingResult);
 
@@ -104,15 +103,18 @@ public class ContractController {
 
     @PostMapping("/create-contractDetail")
     public String saveContractDetail(@Validated @ModelAttribute(name = "contractDetailDto") ContractDetailDto contractDetailDto,
-                                     BindingResult bindingResult, RedirectAttributes redirectAttributes){
+                                     BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         ContractDetail contractDetail = new ContractDetail();
         new ContractDetailDto().validate(contractDetailDto, bindingResult);
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("contractDetailDto", contractDetailDto);
             redirectAttributes.addFlashAttribute("message", "Can not add new attach facility.");
+            return "redirect:/contracts";
         }
-        if(contractService.findContractById(contractDetailDto.getContract().getId()) == null) {
+
+        if (contractService.findContractById(contractDetailDto.getContract().getId()) == null) {
             redirectAttributes.addFlashAttribute("message", "Can not add new attach facility.");
-        }else {
+        } else {
             BeanUtils.copyProperties(contractDetailDto, contractDetail);
             contractDetailService.saveContractDetail(contractDetail);
             redirectAttributes.addFlashAttribute("message", "New attach facility : " + contractDetailDto.getAttachFacility().getName() + " was added in contract:" + contractDetailDto.getContract().getId());

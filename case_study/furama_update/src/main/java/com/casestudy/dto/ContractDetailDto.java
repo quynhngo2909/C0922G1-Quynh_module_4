@@ -5,11 +5,13 @@ import com.casestudy.entity.Contract;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.validation.constraints.Min;
+
 
 public class ContractDetailDto implements Validator {
 
     private int id;
-    private int quantity;
+    private int quantity = 1;
     private Contract contract;
     private AttachFacility attachFacility;
 
@@ -62,7 +64,11 @@ public class ContractDetailDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
+        ContractDetailDto contractDetailDto = (ContractDetailDto) target;
+        int quantity = contractDetailDto.quantity;
+        if(quantity < 1) {
+            errors.rejectValue("quantity","ctrDetail.qty","Quantity must be equal or bigger than 1.");
+        }
     }
 }
 

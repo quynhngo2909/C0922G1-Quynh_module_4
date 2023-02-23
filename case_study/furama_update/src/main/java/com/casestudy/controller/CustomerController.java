@@ -1,9 +1,7 @@
 package com.casestudy.controller;
 
 import com.casestudy.dto.CustomerDto;
-import com.casestudy.dto.FacilityDto;
 import com.casestudy.entity.Customer;
-import com.casestudy.entity.Facility;
 import com.casestudy.service.ICustomerService;
 import com.casestudy.service.ICustomerTypeService;
 import org.springframework.beans.BeanUtils;

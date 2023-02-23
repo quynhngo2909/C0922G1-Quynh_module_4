@@ -9,20 +9,11 @@ import org.springframework.validation.Validator;
 
 public class ContractDto implements Validator {
     private int id;
-
-
     private double deposit;
-
-
     private String startDate;
-
     private String endDate;
-
-
     private Customer customer;
-
     private Employee employee;
-
     private Facility facility;
 
     public ContractDto() {
@@ -101,7 +92,6 @@ public class ContractDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
     }
 }
 

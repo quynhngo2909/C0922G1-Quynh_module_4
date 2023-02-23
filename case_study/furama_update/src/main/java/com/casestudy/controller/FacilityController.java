@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 @Controller
 @RequestMapping("/facilities")
 public class FacilityController {
@@ -28,7 +27,6 @@ public class FacilityController {
     private IFacilityTypeService facilityTypeService;
     @Autowired
     private IRentTypeService rentTypeService;
-
 
     @GetMapping()
     public ModelAndView getFacility(@RequestParam(name = "name", defaultValue = "") String name,
@@ -117,11 +115,11 @@ public class FacilityController {
     @GetMapping("/delete-facility/{id}")
     public String deleteFacility(@PathVariable(name = "id") int id, Model model, RedirectAttributes redirectAttributes) {
         Facility facility = facilityService.findById(id);
-        if(facility == null){
+        if (facility == null) {
             redirectAttributes.addFlashAttribute("message", "Facility is not exist.");
         } else {
             facilityService.setExpired(id);
-            redirectAttributes.addFlashAttribute("message", "Facility \"" + facility.getName() +" \"was deleted!");
+            redirectAttributes.addFlashAttribute("message", "Facility \"" + facility.getName() + " \"was deleted!");
         }
         return "redirect:/facilities";
     }
