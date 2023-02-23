@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Contract List</title>
-  <head>
-    <meta charset="UTF-8">
-    <title>Customer List</title>
-    <div th:replace="~{layout::head}"></div>
-  </head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Customer List</title>
+        <div th:replace="~{layout::head}"></div>
+    </head>
 <body>
 <div th:replace="~{layout::header}"></div>
-<div class="container justify-content-center">
+<div class="container d-flex justify-content-between mt-1">
     <a role="button" th:href="@{/contracts/create-contract}" class="btn btn-success btn-sm">Create new contract</a>
-    <form class="form-control" method="get" th:action="@{/contracts}">
+    <form method="get" th:action="@{/contracts}">
         <input name="customerName" placeholder="Input Customer's Name">
         <input name="employeeName" placeholder="Input Employee's Name">
         <input name="facilityName" placeholder="Input Facility's Name">
-        <button type="submit">Search</button>
+        <button type="submit" class="btn btn-secondary btn-sm">Search</button>
     </form>
 </div>
+<div th:text="${message}" style="color: blue; font-weight: bold"></div>
 <p class="text-center fw-bold">CONTRACT LIST</p>
 <table class="table table-striped">
     <thead>
     <tr>
         <th scope="row">#</th>
+        <th scope="row">ID</th>
         <th scope="row">Facility</th>
         <th scope="row">Customer</th>
         <th scope="row">Start Date</th>
@@ -36,32 +38,118 @@
     <tbody>
     <tr th:each="contract, iter : ${contracts}">
         <td th:text="${iter.count}"></td>
-        <td th:text="${contract.facility.name}"></td>
-        <td th:text="${contract.customer.name}"></td>
+        <td th:text="${contract.id}"></td>
+        <td th:text="${contract.facility}"></td>
+        <td th:text="${contract.customer}"></td>
         <td th:text="${contract.startDate}"></td>
         <td th:text="${contract.endDate}"></td>
         <td th:text="${contract.deposit}"></td>
+        <td th:text="${contract.totalCost}"></td>
         <td></td>
         <td>
-            <a role="button" class="btn btn-info btn-sm">+</a>
-            <a role="button" class="btn btn-info btn-sm">Attach Facility List</a>
+            <a th:text="${contract.id}" role="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+               data-bs-target="#addAttFacility"
+               th:attr="onclick=|addAttFacility(${contract.id})|">+</a>
+            <a role="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#attFacList"
+               th:attr="onclick=|getAttFacility(${contract.id})|">Attach Facility List</a>
         </td>
     </tr>
     </tbody>
 </table>
+
+<!--Modal Add Attach Facility-->
+<div class="modal fade" id="addAttFacility" data-bs-backdrop="static"
+     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title fs-5">Add Attach Facility</h4>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/contracts/create-contractDetail}" th:object="${contractDetailDto}" method="post">
+                    <input th:field="*{contract}" id="contractId" hidden>
+                    <label>Attach Facility</label>
+                    <select th:field="*{attachFacility}" class="form-control">
+                        <option value="0">Select Attach Facility</option>
+                        <option th:each="attFac:${attFacilities}" th:text="${attFac.name}"
+                                th:value="${attFac.id}"></option>
+                    </select>
+                    <label>Quantity</label>
+                    <input th:field="*{quantity}" type="number" id="attFacQty" class="form-control">
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-secondary" type="submit" data-bs-dismiss="modal">Save</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Modal Get Attach Facility -->
+<div class="modal fade" id="attFacList" data-bs-backdrop="static"
+     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title fs-5">Attach Facility List</h4>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body" id="attachFacilityBody"></div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="text-center">
     <a role="button" class="btn btn-success btn-sm" th:if="${contracts.hasPrevious()}"
-       th:href="@{/contracts(page=${contracts.number + 1},customerName=${customerName},employeeName=${employeeName},facilityName=${facilityName})}" >
+       th:href="@{/contracts(page=${contracts.number - 1},customerName=${customerName},employeeName=${employeeName},facilityName=${facilityName})}">
         <i class="fas fa-arrow-left btn-sm"></i>
     </a>
     <span th:text="${contracts.number + 1}"></span>
     <span>/</span>
-    <span  th:text="${contracts.totalPages}" th:if="${contracts.hasNext()}" th:href="@{}"></span>
-    <a role="button" class="btn btn-success btn-sm" >
+    <span th:text="${contracts.totalPages}"></span>
+    <a role="button" class="btn btn-success btn-sm" th:if="${contracts.hasNext()}"
+       th:href="@{/contracts(page=${contracts.number +1},customerName=${customerName},employeeName=${employeeName},facilityName=${facilityName})}">
         <i class="fas fa-arrow-right"></i>
     </a>
 </div>
 <div th:replace="~{layout::footer}"></div>
 </body>
 <div th:replace="~{layout::scriptBoostrapJQuery}"></div>
+
+<script>
+    function getAttFacility(contractId) {
+        $.ajax({
+            url: '/attachFacility?contractId=' + contractId,
+            type: 'GET',
+            success: function (data) {
+                let body = '';
+                for (let af of data) {
+                    body += `
+                        <div>
+                            ${af.attachFacilityName} : ${af.quantity}
+                        </div>
+                    `;
+                }
+                if (data.length == 0) {
+                    body += `No attach facility`;
+                }
+
+                $("#attachFacilityBody").html(body);
+
+                console.log(JSON.stringify(data));
+            }
+        })
+    }
+
+    function addAttFacility(id) {
+        debugger
+        document.getElementById('contractId').value = id;
+    }
+</script>
 </html>

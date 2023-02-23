@@ -7,7 +7,7 @@
 </head>
 <body>
 <div th:replace="~{layout::header}"></div>
-<div class="container d-flex justify-content-between">
+<div class="container d-flex justify-content-between mt-1">
     <a role="button" class="btn btn-secondary btn-sm " th:href="@{/facilities/create-facility}">New Facility</a>
     <form method="get" th:action="@{/facilities}" class="d-flex">
         <input name="name" placeholder="Facility's name">

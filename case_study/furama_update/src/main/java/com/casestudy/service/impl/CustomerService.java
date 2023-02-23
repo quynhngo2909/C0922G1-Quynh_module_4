@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerService implements ICustomerService {
     @Autowired
@@ -41,5 +43,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public Integer getCustomerIDByIdCardEmailPhoneNumber(String idCard, String email, String phoneNumber) {
         return customerRepository.getCustomerIDByIdCardEmailPhoneNumber(idCard, email, phoneNumber);
+    }
+
+    @Override
+    public List<Customer> customers() {
+        return customerRepository.findAll();
     }
 }

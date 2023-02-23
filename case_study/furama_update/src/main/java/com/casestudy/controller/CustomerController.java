@@ -68,45 +68,41 @@ public class CustomerController {
     @PostMapping("/save-customer")
     public String saveCustomer(@Validated @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model,
                                RedirectAttributes redirectAttributes) {
-        String customerDtoID = String.valueOf(customerDto.getId());
+        int customerDtoID = (customerDto.getId());
         Customer customer = new Customer();
         new CustomerDto().validate(customerDto, bindingResult);
         Integer dbId = customerService.getCustomerIDByIdCardEmailPhoneNumber(customerDto.getIdCard(), customerDto.getEmail(), customerDto.getPhoneNumber());
 
         switch (customerDtoID) {
-            case "null":
-                //        Customer customer = new Customer();
-//        new CustomerDto().validate(customerDto, bindingResult);
-                if (bindingResult.hasErrors()) {
-                    model.addAttribute("customerDto", customerDto);
-                    model.addAttribute("customerTypes", customerTypeService.customerTypes());
-                    return "/customer/updateCustomer";
-                }
-//                Integer dbId = customerService.getCustomerIDByIdCardEmailPhoneNumber(customerDto.getIdCard(), customerDto.getEmail(), customerDto.getPhoneNumber());
-                if (dbId != customerDto.getId()) {
-                    model.addAttribute("message", "The ID Card / Email / Phone number was used by other customer!");
-                    model.addAttribute("customerTypes", customerTypeService.customerTypes());
-                    model.addAttribute("customerDto", customerDto);
-                    return "customer/updateCustomer";
-                } else {
-                    BeanUtils.copyProperties(customerDto, customer);
-                    customerService.saveCustomer(customer);
-                    redirectAttributes.addFlashAttribute("message",
-                            "Customer: \" " + customer.getName() + " \" was updated successfully!");
-                    return "redirect:/customers";
-                }
-            default:
+            case 0:
                 if (bindingResult.hasErrors()) {
                     model.addAttribute("customerDto", customerDto);
                     model.addAttribute("customerTypes", customerTypeService.customerTypes());
                     return "/customer/createCustomer";
                 }
-//                Integer dbId = customerService.getCustomerIDByIdCardEmailPhoneNumber(customerDto.getIdCard(), customerDto.getEmail(), customerDto.getPhoneNumber());
                 if (dbId != null) {
                     model.addAttribute("message", "The ID Card / Email / Phone number was used by other customer!");
                     model.addAttribute("customerTypes", customerTypeService.customerTypes());
                     model.addAttribute("customerDto", customerDto);
                     return "customer/createCustomer";
+                } else {
+                    BeanUtils.copyProperties(customerDto, customer);
+                    customerService.saveCustomer(customer);
+                    redirectAttributes.addFlashAttribute("message",
+                            "Customer: \" " + customer.getName() + " \" was created successfully!");
+                    return "redirect:/customers";
+                }
+            default:
+                   if (bindingResult.hasErrors()) {
+                    model.addAttribute("customerDto", customerDto);
+                    model.addAttribute("customerTypes", customerTypeService.customerTypes());
+                    return "/customer/updateCustomer";
+                }
+                if (dbId != customerDto.getId()) {
+                    model.addAttribute("message", "The ID Card / Email / Phone number was used by other customer!");
+                    model.addAttribute("customerTypes", customerTypeService.customerTypes());
+                    model.addAttribute("customerDto", customerDto);
+                    return "customer/updateCustomer";
                 } else {
                     BeanUtils.copyProperties(customerDto, customer);
                     customerService.saveCustomer(customer);

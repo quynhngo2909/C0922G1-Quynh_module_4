@@ -44,4 +44,10 @@ public class FacilityService implements IFacilityService {
     public void setExpired(int id) {
         facilityRepository.setExpired(id);
     }
+
+    @Override
+    public List<Facility> facilities() {
+        return facilityRepository.findAll();
+    }
+
 }

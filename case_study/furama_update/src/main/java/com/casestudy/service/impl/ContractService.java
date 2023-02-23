@@ -1,5 +1,7 @@
 package com.casestudy.service.impl;
 
+import com.casestudy.dto.ContractDto;
+import com.casestudy.dto.IContractDto;
 import com.casestudy.entity.Contract;
 import com.casestudy.repository.IContractRepository;
 import com.casestudy.service.IContractService;
@@ -30,5 +32,15 @@ public class ContractService implements IContractService {
     @Override
     public Page<Contract> findContract(Pageable pageable) {
         return contractRepository.findContract(pageable);
+    }
+
+    @Override
+    public Contract findContractById(int id) {
+        return contractRepository.findById(id).get();
+    }
+
+    @Override
+    public Page<IContractDto> getContractDtos(String customerName, String employeeName, String facilityName, Pageable pageable) {
+        return contractRepository.getContractDtos(customerName, employeeName, facilityName, pageable);
     }
 }

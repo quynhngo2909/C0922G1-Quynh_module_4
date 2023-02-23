@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface ICustomerService {
     Page<Customer> findCustomerByNameEmail(String name, String email, String customerTypename, Pageable pageable);
     void saveCustomer(Customer customer);
@@ -14,7 +16,7 @@ public interface ICustomerService {
 
     void setExpiredCustomer(int id);
     Integer getCustomerIDByIdCardEmailPhoneNumber(String idCard, String email, String phoneNumber);
-
+    List<Customer> customers ();
 
 }
 
