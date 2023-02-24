@@ -84,7 +84,7 @@ public class ContractController {
                 ContractDetail contractDetail = new ContractDetail();
                 contractDetailDto.setContract(contract);
                 contractDetailDto.setAttachFacility(contractDto.getAttachFacility());
-                contractDetailDto.setQuantity(contractDetailDto.getQuantity());
+                contractDetailDto.setQuantity(contractDto.getAttFacilityQty());
                 BeanUtils.copyProperties(contractDetailDto, contractDetail);
                 contractDetailService.saveContractDetail(contractDetail);
                 redirectAttributes.addFlashAttribute("message",
