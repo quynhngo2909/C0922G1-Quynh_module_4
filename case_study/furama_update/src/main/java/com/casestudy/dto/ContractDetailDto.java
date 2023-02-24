@@ -10,7 +10,7 @@ import javax.validation.constraints.Min;
 
 public class ContractDetailDto implements Validator {
 
-    private int id;
+    private Integer id;
     private int quantity = 1;
     private Contract contract;
     private AttachFacility attachFacility;
@@ -25,11 +25,11 @@ public class ContractDetailDto implements Validator {
     public ContractDetailDto() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

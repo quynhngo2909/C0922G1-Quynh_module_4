@@ -30,7 +30,7 @@ public class CustomerController {
     public String getCustomers(Model model, @RequestParam(name = "name", defaultValue = "") String name,
                                @RequestParam(name = "email", defaultValue = "") String email,
                                @RequestParam(name = "customerTypeName", defaultValue = "") String customerTypeName,
-                               @PageableDefault(size = 5, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
+                               @PageableDefault(size = 2, sort = "name", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<Customer> customerPage = customerService.findCustomerByNameEmail(name, email, customerTypeName, pageable);
         model.addAttribute("customerPage", customerPage);
         model.addAttribute("name", name);

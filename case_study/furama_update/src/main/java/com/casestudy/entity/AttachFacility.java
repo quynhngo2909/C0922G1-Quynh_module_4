@@ -9,7 +9,7 @@ public class AttachFacility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
     @Column(name = "name", length = 45, nullable = false, unique = true)
     private String name;
     @Column(name = "cost", nullable = false)
@@ -26,7 +26,7 @@ public class AttachFacility {
     public AttachFacility() {
     }
 
-    public AttachFacility(int id, String name, double cost, String unit, String status, Set<ContractDetail> contractDetails) {
+    public AttachFacility(Integer id, String name, double cost, String unit, String status, Set<ContractDetail> contractDetails) {
         this.id = id;
         this.name = name;
         this.cost = cost;
@@ -35,11 +35,11 @@ public class AttachFacility {
         this.contractDetails = contractDetails;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

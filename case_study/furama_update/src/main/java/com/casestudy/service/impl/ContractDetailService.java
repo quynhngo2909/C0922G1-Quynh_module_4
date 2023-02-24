@@ -28,4 +28,9 @@ public class ContractDetailService implements IContractDetailService {
         return contractDetailRepository.findById(id).get();
     }
 
+    @Override
+    public void deleteContractDetail(int id) {
+        contractDetailRepository.deleteById(id);
+    }
+
 }

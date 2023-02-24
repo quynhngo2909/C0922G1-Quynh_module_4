@@ -13,6 +13,7 @@ import java.util.List;
 public interface IAttachFacilityRepository extends JpaRepository<AttachFacility, Integer> {
 
     @Query(value = "select\n" +
+            "    ctrd.id as contractDetailId,\n" +
             "    c.id as contractId,\n" +
             "    af.name as attachFacilityName,\n" +
             "    af.status      as status,\n" +

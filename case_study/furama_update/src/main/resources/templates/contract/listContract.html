@@ -70,7 +70,7 @@
                 <form th:action="@{/contracts/create-contractDetail}" th:object="${contractDetailDto}" method="post">
                     <input th:field="*{contract}" id="contractId" th:value="*{id}" hidden>
                     <label>Attach Facility</label>
-                    <select th:field="*{attachFacility}" class="form-control">
+                    <select th:field="*{attachFacility}" class="form-control" required>
                         <option value="0">Select Attach Facility</option>
                         <option th:each="attFac:${attFacilities}" th:text="${attFac.name}"
                                 th:value="${attFac.id}"></option>
@@ -130,9 +130,10 @@
             url: '/attachFacility?contractId=' + contractId,
             type: 'GET',
             success: function (data) {
-                let body = `<table class="table table-striped"><tr><th>Attach Facility</th><th>Unit</th><th>Quantity</th><th>Unit Cost</th></tr>`;
+                let body = `<table class="table table-striped"><tr><th>Attach Facility</th><th>Unit</th><th>Quantity</th><th>Unit Cost</th><th></th></tr>`;
                 for (let af of data) {
-                    body += `<tr><td>${af.attachFacilityName}</td><td>${af.unit}</td><td>${af.quantity}</td><td>${af.cost}</td></tr>`;
+                    body += `<tr><td>${af.attachFacilityName}</td><td>${af.unit}</td><td>${af.quantity}</td><td>${af.cost}</td>` +
+                        `<td><a role="button" class="btn btn-sm btn-secondary" href="/contracts/delete-contractDetail/${af.contractDetailId}"> ${af.contractDetailId}</a></td></tr>`;
                 }
                 body += `</table>`;
                 if (data.length == 0) {

@@ -8,4 +8,6 @@ public interface IContractDetailService {
     List<ContractDetail> getContractDetail();
     void saveContractDetail(ContractDetail contractDetail);
     ContractDetail findContractDetail(int id);
+
+    void deleteContractDetail(int id);
 }

@@ -106,6 +106,10 @@ public class ContractController {
                                      BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
         ContractDetail contractDetail = new ContractDetail();
         new ContractDetailDto().validate(contractDetailDto, bindingResult);
+        if(contractDetailDto.getId() == null){
+            redirectAttributes.addFlashAttribute("message", "Can not add new attach facility.");
+            return "redirect:/contracts";
+        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("contractDetailDto", contractDetailDto);
             redirectAttributes.addFlashAttribute("message", "Can not add new attach facility.");
@@ -120,5 +124,18 @@ public class ContractController {
             redirectAttributes.addFlashAttribute("message", "New attach facility : " + contractDetailDto.getAttachFacility().getName() + " was added in contract:" + contractDetailDto.getContract().getId());
         }
         return "redirect:/contracts";
+    }
+
+    @GetMapping("/delete-contractDetail/{id}")
+    public String deleteContractDetail(@PathVariable(name = "id") int id, Model model) {
+        ContractDetail dbCtrDetail = contractDetailService.findContractDetail(id);
+        if(dbCtrDetail == null){
+            model.addAttribute("message", "Contract detail  is not existed.");
+            return "redirect:/contracts";
+        } else {
+            contractDetailService.deleteContractDetail(id);
+            model.addAttribute("message", "Attach facility was deleted!");
+            return "redirect:/contracts";
+        }
     }
 }
