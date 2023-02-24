@@ -39,7 +39,7 @@ public class ContractController {
     public String getContracts(@RequestParam(name = "customerName", defaultValue = "") String customerName,
                                @RequestParam(name = "employeeName", defaultValue = "") String employeeName,
                                @RequestParam(name = "facilityName", defaultValue = "") String facilityName,
-                               @PageableDefault(size = 5, sort = "start_date", direction = Sort.Direction.DESC) Pageable pageable,
+                               @PageableDefault(size = 5, sort = {"customer","startDate"}, direction = Sort.Direction.DESC) Pageable pageable,
                                Model model) {
         Page<IContractDto> contracts = contractService.getContractDtos(customerName, employeeName, facilityName, pageable);
         model.addAttribute("contracts", contracts);
