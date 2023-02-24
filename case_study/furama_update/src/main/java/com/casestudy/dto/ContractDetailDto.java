@@ -11,7 +11,9 @@ import javax.validation.constraints.Min;
 public class ContractDetailDto implements Validator {
 
     private int id;
-    private int quantity = 1;
+
+    @Min(1)
+    private int quantity;
     private Contract contract;
     private AttachFacility attachFacility;
 
@@ -67,11 +69,11 @@ public class ContractDetailDto implements Validator {
         ContractDetailDto contractDetailDto = (ContractDetailDto) target;
         int quantity = contractDetailDto.quantity;
         if(contractDetailDto.getAttachFacility().getId() == null){
-            errors.rejectValue("id", "ctrDetail.qty", "Please select attach facility.");
+            errors.rejectValue("id", "id", "Please select attach facility.");
         }
-        if(quantity < 1) {
-            errors.rejectValue("quantity","ctrDetail.qty","Quantity must be equal or bigger than 1.");
-        }
+//        if(quantity < 1) {
+//            errors.rejectValue("quantity","quantity", "Quantity must be equal or bigger than 1.");
+//        }
     }
 }
 

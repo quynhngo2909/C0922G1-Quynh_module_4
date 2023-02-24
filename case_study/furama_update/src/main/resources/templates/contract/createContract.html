@@ -28,7 +28,7 @@
             </div>
             <div class=" col-sm-8">
                 <input th:field="*{startDate}" th:value="*{startDate}" required type="date" class="form-control">
-                <!--                <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>-->
+<!--                <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>-->
             </div>
         </div>
         <div class="row form-group">
@@ -37,7 +37,7 @@
             </div>
             <div class=" col-sm-8">
                 <input th:field="*{endDate}" th:value="*{endDate}" required type="date" class="form-control">
-                <!--                <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>-->
+<!--                <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>-->
             </div>
         </div>
         <div class="row form-group">
@@ -46,7 +46,7 @@
             </div>
             <div class=" col-sm-8">
                 <input th:field="*{deposit}" th:value="*{deposit}" required class="form-control">
-                <!--                <p th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}"></p>-->
+<!--                <p th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}"></p>-->
             </div>
         </div>
 
@@ -77,7 +77,33 @@
                 <label>Attach Facility</label>
             </div>
             <div class=" col-sm-8">
-                <button type="button" class="btn btn-success btn-sm">+</button>
+                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addAttFacility">+</button>
+                <!--Modal Add Attach Facility-->
+                <div class="modal fade" id="addAttFacility" data-bs-backdrop="static"
+                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title fs-5">Add Attach Facility</h4>
+                                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <label>Attach Facility</label>
+                                <select th:field="*{attachFacility}" class="form-control" required>
+                                    <option value="0"></option>
+                                    <option th:each="attFac:${attachFacilities}" th:text="${attFac.name}"
+                                            th:value="${attFac.id}"></option>
+                                </select>
+                                <label>Quantity</label>
+                                <input th:field="*{attFacilityQty}" type="number" id="attFacQty" min="1" class="form-control">
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal Add Attach Facility/End-->
             </div>
         </div>
         <div class="row form-group">

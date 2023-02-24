@@ -58,7 +58,7 @@ public class ContractController {
         model.addAttribute("customers", customerService.customers());
         model.addAttribute("employees", employeeService.employees());
         model.addAttribute("facilities", facilityService.facilities());
-        model.addAttribute("attFalSer", attachFacilityService.getAttachFacilities());
+        model.addAttribute("attFacilities", attachFacilityService.getAttachFacilities());
         model.addAttribute("contractDto", new ContractDto());
         return "/contract/createContract";
     }
@@ -80,6 +80,13 @@ public class ContractController {
             } else {
                 BeanUtils.copyProperties(contractDto, contract);
                 contractService.saveContract(contract);
+                ContractDetailDto contractDetailDto = new ContractDetailDto();
+                ContractDetail contractDetail = new ContractDetail();
+                contractDetailDto.setContract(contract);
+                contractDetailDto.setAttachFacility(contractDto.getAttachFacility());
+                contractDetailDto.setQuantity(contractDetailDto.getQuantity());
+                BeanUtils.copyProperties(contractDetailDto, contractDetail);
+                contractDetailService.saveContractDetail(contractDetail);
                 redirectAttributes.addFlashAttribute("message",
                         "Contract: \" " + contract.getId() + " \" was created successfully!");
                 return "redirect:/contracts";

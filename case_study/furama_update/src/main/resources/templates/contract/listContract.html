@@ -56,16 +56,8 @@
     </tr>
     </tbody>
 </table>
-<input id="modalFlag" th:value="${modalFlag}">
-<script>
-    $(document).ready(function (){
-        let flag = document.getElementById('modalFlag');
-        if(flag){
-            $('#addAttFacility').show();
-        }
-    });
-</script>
 <!--Modal Add Attach Facility-->
+<input readonly hidden th:value="${modalFlag}" id="contractDetailModalFlag" />
 <div class="modal fade" id="addAttFacility" data-bs-backdrop="static"
      data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -82,9 +74,8 @@
                         <option th:each="attFac:${attFacilities}" th:text="${attFac.name}"
                                 th:value="${attFac.id}"></option>
                     </select>
-
                     <label>Quantity</label>
-                    <input th:field="*{quantity}" type="number" id="attFacQty" class="form-control">
+                    <input th:field="*{quantity}" type="number" id="attFacQty" min="1" class="form-control">
                     <p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></p>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
@@ -158,5 +149,13 @@
         debugger
         document.getElementById('contractId').value = id;
     }
+
+    $(document).ready(function () {
+        const modalFlag = $("#contractDetailModalFlag").val();
+        if (modalFlag === "true") {
+            $("#addAttFacility").modal("show");
+        }
+
+    })
 </script>
 </html>
