@@ -56,7 +56,15 @@
     </tr>
     </tbody>
 </table>
-
+<input id="modalFlag" th:value="${modalFlag}">
+<script>
+    $(document).ready(function (){
+        let flag = document.getElementById('modalFlag');
+        if(flag){
+            $('#addAttFacility').show();
+        }
+    });
+</script>
 <!--Modal Add Attach Facility-->
 <div class="modal fade" id="addAttFacility" data-bs-backdrop="static"
      data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -71,7 +79,6 @@
                     <input th:field="*{contract}" id="contractId" th:value="*{id}" hidden>
                     <label>Attach Facility</label>
                     <select th:field="*{attachFacility}" class="form-control" required>
-                        <option value="0">Select Attach Facility</option>
                         <option th:each="attFac:${attFacilities}" th:text="${attFac.name}"
                                 th:value="${attFac.id}"></option>
                     </select>

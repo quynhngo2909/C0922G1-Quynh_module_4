@@ -39,7 +39,7 @@ public class ContractController {
     public String getContracts(@RequestParam(name = "customerName", defaultValue = "") String customerName,
                                @RequestParam(name = "employeeName", defaultValue = "") String employeeName,
                                @RequestParam(name = "facilityName", defaultValue = "") String facilityName,
-                               @PageableDefault(size = 5, sort = {"customer","startDate"}, direction = Sort.Direction.DESC) Pageable pageable,
+                               @PageableDefault(size = 5, sort = {"customer", "startDate"}, direction = Sort.Direction.DESC) Pageable pageable,
                                Model model) {
         Page<IContractDto> contracts = contractService.getContractDtos(customerName, employeeName, facilityName, pageable);
         model.addAttribute("contracts", contracts);
@@ -103,21 +103,29 @@ public class ContractController {
 
     @PostMapping("/create-contractDetail")
     public String saveContractDetail(@Validated @ModelAttribute(name = "contractDetailDto") ContractDetailDto contractDetailDto,
-                                     BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+                                     BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model,
+                                     @RequestParam(name = "customerName", defaultValue = "") String customerName,
+                                     @RequestParam(name = "employeeName", defaultValue = "") String employeeName,
+                                     @RequestParam(name = "facilityName", defaultValue = "") String facilityName,
+                                     @PageableDefault(size = 5, sort = {"customer", "startDate"}, direction = Sort.Direction.DESC) Pageable pageable) {
         ContractDetail contractDetail = new ContractDetail();
         new ContractDetailDto().validate(contractDetailDto, bindingResult);
-        if(contractDetailDto.getId() == null){
-            redirectAttributes.addFlashAttribute("message", "Can not add new attach facility.");
-            return "redirect:/contracts";
-        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("contractDetailDto", contractDetailDto);
             redirectAttributes.addFlashAttribute("message", "Can not add new attach facility.");
-            return "redirect:/contracts";
+            model.addAttribute("contracts", contractService.getContractDtos(customerName, employeeName, facilityName, pageable));
+            model.addAttribute("customerName", customerName);
+            model.addAttribute("employeeName", employeeName);
+            model.addAttribute("facilityName", facilityName);
+            model.addAttribute("attFacilities", attachFacilityService.getAttachFacilities());
+            model.addAttribute("contractDetailDto", new ContractDetailDto());
+            model.addAttribute("modalFlag", true);
+            return "/contract/listContract";
         }
 
         if (contractService.findContractById(contractDetailDto.getContract().getId()) == null) {
             redirectAttributes.addFlashAttribute("message", "Can not add new attach facility.");
+            return "redirect:/contracts";
         } else {
             BeanUtils.copyProperties(contractDetailDto, contractDetail);
             contractDetailService.saveContractDetail(contractDetail);
@@ -129,13 +137,12 @@ public class ContractController {
     @GetMapping("/delete-contractDetail/{id}")
     public String deleteContractDetail(@PathVariable(name = "id") int id, Model model) {
         ContractDetail dbCtrDetail = contractDetailService.findContractDetail(id);
-        if(dbCtrDetail == null){
+        if (dbCtrDetail == null) {
             model.addAttribute("message", "Contract detail  is not existed.");
-            return "redirect:/contracts";
         } else {
             contractDetailService.deleteContractDetail(id);
             model.addAttribute("message", "Attach facility was deleted!");
-            return "redirect:/contracts";
         }
+        return "redirect:/contracts";
     }
 }
