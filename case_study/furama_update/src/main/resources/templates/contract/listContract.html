@@ -9,6 +9,8 @@
         <div th:replace="~{layout::head}"></div>
     </head>
 <body>
+
+
 <div th:replace="~{layout::header}"></div>
 <div class="container d-flex justify-content-between mt-1">
     <a role="button" th:href="@{/contracts/create-contract}" class="btn btn-success btn-sm">Create new contract</a>
@@ -75,7 +77,7 @@
                                 th:value="${attFac.id}"></option>
                     </select>
                     <label>Quantity</label>
-                    <input th:field="*{quantity}" type="number" id="attFacQty" min="1" class="form-control">
+                    <input th:field="*{quantity}" type="number" id="attFacQty" class="form-control">
                     <p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></p>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>

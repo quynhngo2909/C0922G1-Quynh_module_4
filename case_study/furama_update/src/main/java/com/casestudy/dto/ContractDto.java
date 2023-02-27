@@ -13,15 +13,14 @@ import java.time.LocalDate;
 
 public class ContractDto implements Validator {
     private int id;
-
     private double deposit;
     private String startDate;
     private String endDate;
     private Customer customer;
     private Employee employee;
     private Facility facility;
-    private AttachFacility attachFacility;
-    private int attFacilityQty;
+    private AttachFacility attachFacility = new AttachFacility(0);
+    private int attFacilityQty = 0;
 
     public ContractDto() {
     }

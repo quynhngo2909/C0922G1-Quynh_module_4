@@ -85,7 +85,9 @@ public class ContractController {
                 contractDetailDto.setContract(contract);
                 contractDetailDto.setAttachFacility(contractDto.getAttachFacility());
                 contractDetailDto.setQuantity(contractDto.getAttFacilityQty());
-                BeanUtils.copyProperties(contractDetailDto, contractDetail);
+                if(contractDetailDto.getAttachFacility().getId() != 0) {
+                    BeanUtils.copyProperties(contractDetailDto, contractDetail);
+                }
                 contractDetailService.saveContractDetail(contractDetail);
                 redirectAttributes.addFlashAttribute("message",
                         "Contract: \" " + contract.getId() + " \" was created successfully!");
@@ -125,7 +127,7 @@ public class ContractController {
             model.addAttribute("employeeName", employeeName);
             model.addAttribute("facilityName", facilityName);
             model.addAttribute("attFacilities", attachFacilityService.getAttachFacilities());
-            model.addAttribute("contractDetailDto", new ContractDetailDto());
+            model.addAttribute("contractDetailDto", contractDetailDto);
             model.addAttribute("modalFlag", true);
             return "/contract/listContract";
         }

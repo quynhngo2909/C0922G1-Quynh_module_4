@@ -90,12 +90,12 @@
                             <div class="modal-body">
                                 <label>Attach Facility</label>
                                 <select th:field="*{attachFacility}" class="form-control" required>
-                                    <option value="0"></option>
+                                    <option selected th:value="${contractDto.attachFacility}">Select Attach Facility</option>
                                     <option th:each="attFac:${attachFacilities}" th:text="${attFac.name}"
                                             th:value="${attFac.id}"></option>
                                 </select>
                                 <label>Quantity</label>
-                                <input th:field="*{attFacilityQty}" type="number" id="attFacQty" min="1" class="form-control">
+                                <input th:field="*{attFacilityQty}" th:value="${contractDto.attFacilityQty}" type="number" id="attFacQty" min="1" class="form-control">
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
                                 </div>
