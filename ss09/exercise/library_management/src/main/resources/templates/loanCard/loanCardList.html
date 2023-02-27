@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Card List</title>
+  <div th:replace="layout::head"></div>
+</head>
+<body>
+<div th:replace="layout::header"></div>
+<h3 class="text-center">Loan Card List</h3>
+<p th:text="${message}"></p>
+<table class="table table-striped">
+    <thead>
+    <tr>
+    <th scope="row">#</th>
+    <th scope="row">Loan Card</th>
+    <th scope="row">Book</th>
+    <th scope="row">Quantity</th>
+    <th scope="row"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="lc, iter : ${loanCardDetails}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${lc.loanCard.name}"></td>
+        <td th:text="${lc.book.name}"></td>
+        <td th:text="${lc.quantity}"></td>
+        <td>
+            <a th:href="@{/book/return-book/__${lc.id}__}" class="btn btn-sm btn-info">Return book</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="text-center">
+    <a th:if="${loanCardDetails.hasPrevious()}" th:href="@{/loanCard(page=${loanCardDetails.number -1})}">
+        <i class="fas fa-arrow-left btn-sm"></i>
+    </a>
+    <span th:text="${loanCardDetails.number + 1}"></span>
+    <span>/</span>
+    <span th:text="${loanCardDetails.totalPages}"></span>
+    <a th:if="${loanCardDetails.hasNext()}" th:href="@{/loanCard(page=${loanCardDetails.number +1})}">
+    <i class="fas fa-arrow-right"></i>
+    </a>
+
+</div>
+<div th:replace="layout::footer"></div>
+</body>
+<div th:replace="layout::scriptBoostrapJQuery"></div>
+</html>

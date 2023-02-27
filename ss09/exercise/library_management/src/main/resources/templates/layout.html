@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Layout</title>
+</head>
+<body>
+<!--head-->
+<div th:fragment="head">
+    <link rel="stylesheet" href="/bootstrap-5.2.3-dist/css/bootstrap.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+            integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc"
+            crossorigin="anonymous"></script>
+    <style>
+
+        .header {
+            font-size: 0.8rem;
+            position: sticky;
+            top: 0px;
+
+        }
+
+        .navbar {
+            font-size: 1rem;
+        }
+
+        .footer {
+            position: sticky;
+            bottom: 0px;
+        }
+    </style>
+</div>
+<div th:fragment="header" class="header">
+    <header >
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg bg-success justify-content-between fs-12 m-0 p-0">
+            <div class="d-flex justify-content-between" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-bold" th:href="@{/book}">Book</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-bold" th:href="@{/loanCard}">Loan Card</a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <form class="d-flex" role="search" th:action="@{#}" method="post">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-info text-white fw-bold" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+</div>
+
+<!--    Content-->
+<div th:fragment="content">
+    <div class="content">
+        <img src="https://furamavietnam.com/wp-content/uploads/2018/11/Vietnam_Danang_Furama_Resort_Exterior_Courtyard-Night-768x480.jpg">
+    </div>
+</div>
+
+<!--    Footer-->
+<div th:fragment="footer" class="footer">
+    <footer class="row bg-success">
+        <span class="d-flex justify-content-center fw-bold text-white">Footer</span>
+    </footer>
+</div>
+
+<!--Script boostrap, jquery-->
+<div th:fragment="scriptBoostrapJQuery">
+    <script src="/bootstrap-5.2.3-dist/js/bootstrap.js"></script>
+    <script src="/jquery-3.6.3.min.js"></script>
+</div>
+</body>
+</html>

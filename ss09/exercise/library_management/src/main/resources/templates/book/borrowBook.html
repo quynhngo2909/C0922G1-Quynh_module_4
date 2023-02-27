@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrow Book</title>
+    <div th:replace="layout::head"></div>
+</head>
+<body>
+<div th:replace="layout::header"></div>
+<form th:object="${loanCardDto}" th:action="@{/book/saveLoanCard}" method="post">
+    <table>
+        <tr>
+            <td>Book</td>
+            <td th:text="${book.name}"></td>
+        </tr>
+        <tr hidden>
+            <td>Book</td>
+            <td><input th:field="*{bookId}" th:value="*{bookId}"></td>
+        </tr>
+        <tr>
+            <td>Author</td>
+            <td th:text="${book.author}"></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td th:text="${book.description}"></td>
+        </tr>
+        <tr>
+            <td>Loan Card Name</td>
+            <td><input th:field="*{name}" required></td>
+        </tr>
+        <tr>
+            <td>Borrow Quantity</td>
+            <td><input th:field="*{bookQty}" min="0" required></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button type="button" th:href="@{/book/}">Cancel</button>
+                <button type="submit">Borrow</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<div th:replace="layout::footer"></div>
+</body>
+<div th:replace="layout::scriptBoostrapJQuery"></div>
+</html>

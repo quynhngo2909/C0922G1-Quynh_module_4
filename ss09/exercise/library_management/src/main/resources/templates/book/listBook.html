@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+    <div th:replace="~{layout::head}"></div>
+</head>
+<body>
+<div th:replace="~{layout::header}"></div>
+<h4 class="text-center">Book List</h4>
+<p th:text="${message}" style="color:red;"></p>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="row">#</th>
+        <th scope="row">Book</th>
+        <th scope="row">Author</th>
+        <th scope="row">Available Quantity</th>
+        <th scope="row">Description</th>
+        <th scope="row"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="b, iter:${books}">
+        <td th:text="${iter.count}"></td>
+        <td th:text="${b.name}"></td>
+        <td th:text="${b.author}"></td>
+        <td th:text="${b.quantity}"></td>
+        <td th:text="${b.description}"></td>
+        <td>
+            <a th:href="@{/}" role="button" class="btn btn-sm btn-info">Detail</a>
+            <a th:href="@{/book/borrow-book/__${b.id}__}" role="button" class="btn btn-sm btn-success">Borrow</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div class="text-center">
+    <a role="button" class="btn btn-sm btn-info" th:if="${books.hasPrevious()}"
+       th:href="@{/book(page=${books.number - 1},name=${name},author=${author})}">
+        <i class="fas fa-arrow-left btn-sm"></i>
+    </a>
+    <span th:text="${books.number +1}"></span>
+    <span>/</span>
+    <span th:text="${books.totalPages}"></span>
+    <a role="button" class="btn btn-sm btn-info" th:if="${books.hasNext()}"
+       th:href="@{/book(page=${books.number +1},name=${name},author=${author})}">
+        <i class="fas fa-arrow-right"></i>
+    </a>
+</div>
+
+<div th:replace="~{layout::footer}"></div>
+</body>
+<div th:replace="~{layout::scriptBoostrapJQuery}"></div>
+</html>
